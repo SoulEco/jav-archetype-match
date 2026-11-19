@@ -1,9 +1,21 @@
-部署说明
-1. 将此目录作为 Cloudflare Pages 项目根目录部署。
-2. 在 Pages 项目绑定 KV Namespace，绑定变量名必须是 MY_KV。
-3. 在 Pages Settings > Variables and Secrets 设置 ADMIN_PASSWORD（管理员密码）；不要把密码写进前端或源码。
-4. functions/api 下的文件对应 /api/check、/api/generate、/api/query、/api/save、/api/list。
-5. 授权码默认有效期30天；如需更改 generate.js 的 expirationTtl。
-6. 每代20道题，五代题目场景分别编写；六个维度分别计算，综合匹配采用加权欧氏距离，每维度另算冠军。
-7. 人物原型向量和人物描述是娱乐性编辑设定，不是对真人性格的事实判断。分代是按首次正式出道的大致时间范围，跨代知名人物可能仅作为传播影响参考。
-安全注意：Cloudflare KV 不提供事务或原子 compare-and-swap。当前 save.js 适用于一般低并发娱乐项目；若同一授权码可能被多人同时提交，需要用 Durable Objects 或具备事务能力的数据库实现原子扣次。
+日本女优气质原型匹配系统 · Cloudflare Pages 部署说明
+
+目录结构：
+- index.html：授权码入口、五代选择、每代30题（六维各5题）、评分与海报
+- admin.html：管理员统一密码入口、生成/单码查询/全部查询
+- gen1.html—gen5.html：五代候选池与五方面介绍
+- functions/api/check.js：授权码验证
+- functions/api/generate.js：管理员批量生成
+- functions/api/query.js：管理员单码/全部查询
+- functions/api/list.js：管理员列表接口
+- functions/api/save.js：保存测试结果
+
+Cloudflare Pages 设置：
+1. 绑定 KV Namespace，绑定变量名 MY_KV。
+2. 在 Settings -> Variables and Secrets 中新增 Secret：ADMIN_PASSWORD。
+3. 部署整个项目目录（必须保留 functions/api 子目录）。
+4. admin.html 顶部统一输入 ADMIN_PASSWORD；此密码不会硬编码在前端。
+
+测试结构：颜值、身材、演技、崩坏反差、公众形象、陪伴感六维；每代30题，每维5题。每题四个选项按该题所属维度计分，维度分别归一化为0—100分。
+
+候选人维度向量、文案和分代是娱乐性编辑设定，不是客观评测、行业官方代际标准或对真人私生活的断言。部署前请人工核对候选名单、出道年份及公众资料。
