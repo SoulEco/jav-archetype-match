@@ -1,317 +1,119 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>管理员 · 授权码管理</title>
-<style>
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-body { 
-  margin: 0; 
-  background: #0a0a0a; 
-  color: #fff; 
-  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; 
-  max-width: 900px; 
-  padding: 24px; 
-  margin: auto; 
-  line-height: 1.6;
-}
-
-h2 { 
-  font-size: 24px; 
-  margin-bottom: 24px; 
-  background: linear-gradient(135deg, #9333ea, #c084fc); 
-  -webkit-background-clip: text; 
-  -webkit-text-fill-color: transparent; 
-  text-align: center;
-}
-h3 { 
-  font-size: 18px; 
-  margin: 0 0 16px 0; 
-  color: #e9d5ff; 
-  border-left: 3px solid #9333ea; 
-  padding-left: 10px; 
-}
-
-.card { 
-  background: #151515; 
-  border: 1px solid #2a2a2a; 
-  border-radius: 16px; 
-  padding: 24px; 
-  margin-bottom: 20px; 
-  transition: border-color 0.2s ease;
-}
-.card:hover { border-color: #4c1d95; }
-
-label { 
-  display: block; 
-  font-size: 13px; 
-  color: #a78bfa; 
-  margin-bottom: 6px; 
-  font-weight: 500; 
-}
-
-input, select { 
-  width: 100%; 
-  padding: 12px 14px; 
-  margin-bottom: 16px; 
-  background: #171717; 
-  color: #fff; 
-  border: 1px solid #333; 
-  border-radius: 10px; 
-  font-size: 14px; 
-  transition: all 0.2s ease;
-  outline: none;
-}
-input:focus, select:focus { 
-  border-color: #a78bfa; 
-  box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.1); 
-}
-
-button { 
-  width: 100%; 
-  padding: 12px; 
-  background: linear-gradient(135deg, #9333ea, #c084fc); 
-  color: #fff; 
-  border: 0; 
-  border-radius: 10px; 
-  font-weight: 700; 
-  font-size: 14px; 
-  cursor: pointer; 
-  transition: all 0.2s ease;
-}
-button:hover:not(:disabled) { 
-  opacity: 0.9; 
-  transform: translateY(-1px); 
-}
-button:disabled { 
-  opacity: 0.5; 
-  cursor: not-allowed; 
-  transform: none; 
-}
-
-.btn-secondary { 
-  background: #1a1a1a; 
-  border: 1px solid #333; 
-  color: #d8b4fe; 
-}
-.btn-secondary:hover:not(:disabled) { 
-  background: #2e1065; 
-  border-color: #a78bfa; 
-}
-
-.hint { 
-  color: #888; 
-  font-size: 12px; 
-  line-height: 1.5; 
-  margin-top: -10px; 
-  margin-bottom: 16px; 
-}
-
-.table-wrapper { 
-  overflow-x: auto; 
-  margin-top: 16px; 
-  border-radius: 10px; 
-  border: 1px solid #2a2a2a; 
-}
-table { 
-  width: 100%; 
-  border-collapse: collapse; 
-  font-size: 13px; 
-  min-width: 600px; 
-}
-th { 
-  background: #1a1a1a; 
-  color: #d8b4fe; 
-  font-weight: 600; 
-  text-align: left; 
-  padding: 12px 16px; 
-  border-bottom: 1px solid #333; 
-}
-td { 
-  padding: 12px 16px; 
-  border-bottom: 1px solid #222; 
-  color: #ccc; 
-}
-tr:last-child td { border-bottom: none; }
-tr:hover td { background: rgba(147, 51, 234, 0.05); }
-
-code { 
-  background: #2e1065; 
-  color: #e9d5ff; 
-  padding: 2px 6px; 
-  border-radius: 4px; 
-  font-family: monospace; 
-  font-size: 12px; 
-}
-
-.ok { color: #4ade80; font-weight: 600; }
-.bad { color: #f87171; font-weight: 600; }
-
-.result-box { 
-  margin-top: 16px; 
-  animation: fadeIn 0.3s ease; 
-}
-@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-</style>
+  <meta charset="UTF-8">
+  <title>管理员 - 授权码管理</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; background: #0a0a0a; color: #fff; padding: 20px; max-width: 850px; margin: 0 auto; }
+    h2 { background: linear-gradient(135deg, #9333ea, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; }
+    .card { background: #151515; padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #2a2a2a; }
+    label { display: block; font-size: 13px; color: #d8b4fe; margin-bottom: 6px; font-weight: 500; }
+    input, select, button { width: 100%; padding: 12px; margin: 6px 0; border-radius: 8px; border: 1px solid #333; background: #171717; color: #fff; font-size: 14px; box-sizing: border-box; transition: all 0.2s ease; }
+    input:focus, select:focus { border-color: #c084fc; outline: none; }
+    button { background: linear-gradient(135deg, #9333ea, #c084fc); border: none; cursor: pointer; font-weight: bold; margin-top: 15px; }
+    button:hover { opacity: 0.9; transform: translateY(-1px); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .btn-sec { background: #1a1a1a; border: 1px solid #333; color: #d8b4fe; }
+    .btn-sec:hover { background: #2e1065; border-color: #c084fc; }
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; background: #151515; border-radius: 8px; overflow: hidden; }
+    th, td { border-bottom: 1px solid #2a2a2a; padding: 10px; text-align: left; font-size: 13px; }
+    th { background: #1a1a1a; color: #c084fc; font-weight: 600; }
+    tr:hover td { background: rgba(147, 51, 234, 0.05); }
+    .code { font-family: monospace; letter-spacing: 1px; background: #2e1065; color: #e9d5ff; padding: 2px 6px; border-radius: 4px; }
+    .ok { color: #a78bfa; font-weight: 600; } 
+    .no { color: #f87171; font-weight: 600; }
+  </style>
 </head>
 <body>
-
-<h2>🔐 授权码管理中心</h2>
-
-<section class="card">
-  <h3>管理员身份验证</h3>
-  <label for="adminPassword">管理员密码 (Cloudflare Secret: ADMIN_PASSWORD)</label>
-  <input id="adminPassword" type="password" placeholder="请输入管理员密码" autocomplete="current-password">
-  <p class="hint">该密码用于生成、查询授权码。密码仅在本地会话中使用，不会保存到浏览器。</p>
-</section>
-
-<section class="card">
-  <h3>1. 批量生成授权码</h3>
-  <label>生成数量 (1 — 100)</label>
-  <input id="count" type="number" min="1" max="100" value="10">
-  
-  <label>单个授权码可测试次数</label>
-  <select id="attempts">
-    <option value="1">1 次</option>
-    <option value="2">2 次</option>
-    <option value="3">3 次</option>
-    <option value="5">5 次</option>
-    <option value="10">10 次</option>
-  </select>
-  
-  <button id="genBtn" onclick="generate()">✨ 生成授权码</button>
-  <div id="generated" class="result-box"></div>
-</section>
-
-<section class="card">
-  <h3>2. 查询单个授权码</h3>
-  <label>授权码</label>
-  <input id="singleCode" maxlength="6" placeholder="输入 6 位授权码" autocomplete="off">
-  <button id="singleBtn" class="btn-secondary" onclick="single()">🔍 查询单个状态</button>
-  <div id="singleResult" class="result-box"></div>
-</section>
-
-<section class="card">
-  <h3>3. 查询所有授权码状态</h3>
-  <p class="hint">读取 KV 中全部 CODE_ 开头的授权码，显示总次数、已用次数、剩余次数和创建时间。</p>
-  <button id="allBtn" class="btn-secondary" onclick="all()">🔄 查询所有授权码状态</button>
-  <div id="allResult" class="result-box"></div>
-</section>
-
-<script>
-const $ = id => document.getElementById(id);
-
-async function call(url, body) {
-  const r = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body)
-  });
-  let d = {};
-  try { d = await r.json(); } catch {}
-  if (!r.ok) throw Error(d.error || `请求失败 (HTTP ${r.status})`);
-  return d;
-}
-
-const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-
-function password() {
-  const p = $("adminPassword").value;
-  if (!p.trim()) throw Error("请先在页面顶部输入管理员密码");
-  return p;
-}
-
-async function withButton(id, loadingText, fn) {
-  const b = $(id);
-  b.disabled = true;
-  const old = b.textContent;
-  b.textContent = loadingText;
-  try {
-    await fn();
-  } catch (e) {
-    alert("❌ " + e.message);
-  } finally {
-    b.disabled = false;
-    b.textContent = old;
-  }
-}
-
-async function generate() {
-  await withButton("genBtn", "生成中…", async () => {
-    const d = await call("/api/generate", {
-      password: password(),
-      count: Number($("count").value),
-      attempts: Number($("attempts").value)
-    });
-    $("generated").innerHTML = `
-      <p class="ok">✅ 成功生成 ${d.codes.length} 个授权码</p>
-      <div class="table-wrapper">
-        <table>
-          <tr><th>授权码</th><th>可用次数</th><th>创建时间</th></tr>
-          ${d.codes.map(x => `<tr><td><code>${esc(x.code)}</code></td><td>${x.max}</td><td>${esc(x.created)}</td></tr>`).join("")}
-        </table>
-      </div>
-    `;
-  });
-}
-
-async function single() {
-  await withButton("singleBtn", "查询中…", async () => {
-    const code = $("singleCode").value.trim().toUpperCase();
-    if (!/^[A-Z0-9]{6}$/.test(code)) throw Error("请输入 6 位字母或数字授权码");
-    
-    const d = await call("/api/query", { password: password(), code });
-    const x = d.data;
-    $("singleResult").innerHTML = `
-      <div class="table-wrapper">
-        <table>
-          <tr><th>授权码</th><th>总次数</th><th>已用</th><th>剩余</th><th>创建时间</th></tr>
-          <tr>
-            <td><code>${esc(x.code)}</code></td>
-            <td>${x.max}</td>
-            <td>${x.used}</td>
-            <td class="${x.remaining > 0 ? 'ok' : 'bad'}">${x.remaining}</td>
-            <td>${esc(x.created)}</td>
-          </tr>
-        </table>
-      </div>
-    `;
-  });
-}
-
-async function all() {
-  await withButton("allBtn", "正在读取全部授权码…", async () => {
-    const d = await call("/api/query", { password: password() });
-    const list = d.list || [];
-    
-    if (list.length === 0) {
-      $("allResult").innerHTML = `<p class="hint" style="margin-top:16px; text-align:center;">KV 中暂时没有授权码。</p>`;
-      return;
+  <h2>🔐 授权码管理中心</h2>
+  <div class="card">
+    <h3 style="color:#e9d5ff; margin-top:0; border-left: 3px solid #9333ea; padding-left: 10px;">1. 批量生成</h3>
+    <label>管理员密码</label><input type="password" id="passGen" placeholder="请输入密码">
+    <label>数量</label><input type="number" id="count" value="10" min="1" max="100">
+    <label>单码测试次数</label>
+    <select id="attempts"><option value="1">1 次</option><option value="2">2 次</option><option value="3">3 次</option></select>
+    <button onclick="generate()" id="genBtn">生成授权码</button>
+    <div id="genResult" style="display:none; margin-top:15px;">
+      <p class="ok">✅ 生成成功，请复制下表</p>
+      <button class="btn-sec" style="width:auto; padding:5px 10px; font-size:12px;" onclick="copy('genBody')">复制表格</button>
+      <table><thead><tr><th>授权码</th><th>次数</th><th>时间</th></tr></thead><tbody id="genBody"></tbody></table>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="color:#e9d5ff; margin-top:0; border-left: 3px solid #9333ea; padding-left: 10px;">2. 精准查询单个</h3>
+    <label>管理员密码</label><input type="password" id="passSingle" placeholder="输入密码">
+    <label>授权码 (6位)</label><input type="text" id="queryCode" maxlength="6" placeholder="例如: A7K9M2" style="text-transform:uppercase;">
+    <button class="btn-sec" onclick="querySingle()" id="qsBtn">🔍 查询</button>
+    <div id="singleRes" style="display:none; margin-top:15px; padding:15px; background:#1a1a1a; border-radius:8px; border: 1px solid #2a2a2a;">
+      <p>授权码: <span id="rCode" class="code" style="font-size:18px; color:#c084fc;"></span></p>
+      <p>总次数: <span id="rMax"></span> | 已用: <span id="rUsed" class="no"></span> | 剩余: <span id="rRemain" class="ok"></span></p>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="color:#e9d5ff; margin-top:0; border-left: 3px solid #9333ea; padding-left: 10px;">3. 批量查询所有</h3>
+    <label>管理员密码</label><input type="password" id="passAll" placeholder="输入密码">
+    <button class="btn-sec" onclick="queryAll()" id="qaBtn">🔄 刷新全部列表</button>
+    <div id="listRes" style="display:none; margin-top:15px;">
+      <button class="btn-sec" style="width:auto; padding:5px 10px; font-size:12px;" onclick="copy('listBody')">复制表格</button>
+      <table><thead><tr><th>授权码</th><th>总/已用/剩余</th><th>状态</th><th>时间</th></tr></thead><tbody id="listBody"></tbody></table>
+    </div>
+  </div>
+  <script>
+    async function handleApi(url, body) {
+      const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || '请求失败');
+      return data;
     }
-
-    $("allResult").innerHTML = `
-      <p class="ok" style="margin-top:16px; margin-bottom:12px;">共读取 ${list.length} 个授权码</p>
-      <div class="table-wrapper">
-        <table>
-          <tr><th>授权码</th><th>总 / 已用 / 剩余</th><th>状态</th><th>创建时间</th></tr>
-          ${list.map(x => `
-            <tr>
-              <td><code>${esc(x.code)}</code></td>
-              <td>${x.max} / ${x.used} / <span class="${x.remaining > 0 ? 'ok' : 'bad'}">${x.remaining}</span></td>
-              <td class="${x.remaining > 0 ? 'ok' : 'bad'}">${x.remaining > 0 ? '✅ 可用' : '❌ 已用完'}</td>
-              <td>${esc(x.created)}</td>
-            </tr>
-          `).join("")}
-        </table>
-      </div>
-    `;
-  });
-}
-
-$("singleCode").addEventListener("input", e => {
-  e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
-});
-</script>
+    async function generate() {
+      const pass = document.getElementById('passGen').value;
+      if (!pass) return alert('请输入密码');
+      const btn = document.getElementById('genBtn'); btn.disabled = true; btn.innerText = '生成中...';
+      try {
+        const data = await handleApi('/api/generate', { password: pass, count: parseInt(document.getElementById('count').value), attempts: parseInt(document.getElementById('attempts').value) });
+        const tbody = document.getElementById('genBody'); tbody.innerHTML = '';
+        const now = new Date().toLocaleString('zh-CN');
+        data.codes.forEach(item => { tbody.innerHTML += `<tr><td class="code">${item.code}</td><td>${item.max}</td><td>${now}</td></tr>`; });
+        document.getElementById('genResult').style.display = 'block';
+      } catch (e) { alert('生成失败: ' + e.message); }
+      finally { btn.disabled = false; btn.innerText = '生成授权码'; }
+    }
+    async function querySingle() {
+      const pass = document.getElementById('passSingle').value; const code = document.getElementById('queryCode').value.trim();
+      if (!pass || !code) return alert('请输入密码和授权码');
+      const btn = document.getElementById('qsBtn'); btn.disabled = true; btn.innerText = '查询中...';
+      document.getElementById('singleRes').style.display = 'none';
+      try {
+        const data = await handleApi('/api/query', { password: pass, code: code });
+        if (data.type === 'single') {
+          document.getElementById('rCode').innerText = data.data.code; document.getElementById('rMax').innerText = data.data.max;
+          document.getElementById('rUsed').innerText = data.data.used; document.getElementById('rRemain').innerText = data.data.remaining;
+          document.getElementById('singleRes').style.display = 'block';
+        }
+      } catch (e) { alert('查询失败: ' + e.message); }
+      finally { btn.disabled = false; btn.innerText = '🔍 查询'; }
+    }
+    async function queryAll() {
+      const pass = document.getElementById('passAll').value; if (!pass) return alert('请输入密码');
+      const btn = document.getElementById('qaBtn'); btn.disabled = true; btn.innerText = '读取中...';
+      try {
+        const data = await handleApi('/api/query', { password: pass });
+        if (data.type === 'all') {
+          const tbody = document.getElementById('listBody'); tbody.innerHTML = '';
+          data.list.forEach(item => {
+            const status = item.remaining > 0 ? `<span class="ok">可用(剩${item.remaining})</span>` : `<span class="no">已用完</span>`;
+            tbody.innerHTML += `<tr><td class="code">${item.code}</td><td>${item.max}/${item.used}/${item.remaining}</td><td>${status}</td><td style="font-size:11px;color:#888;">${item.created}</td></tr>`;
+          });
+          document.getElementById('listRes').style.display = 'block';
+        }
+      } catch (e) { alert('读取失败: ' + e.message); }
+      finally { btn.disabled = false; btn.innerText = '🔄 刷新全部列表'; }
+    }
+    function copy(tbodyId) {
+      let text = ''; document.querySelectorAll(`#${tbodyId} tr`).forEach(tr => { text += tr.innerText.replace(/\n/g, '\t') + '\n'; });
+      navigator.clipboard.writeText(text).then(() => alert('✅ 已复制'));
+    }
+    document.getElementById('queryCode').addEventListener('input', function(e) { e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); });
+  </script>
 </body>
 </html>
