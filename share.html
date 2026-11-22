@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>我的气质原型档案</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -50,171 +50,36 @@ canvas{max-width:100%;height:auto;display:block;margin:0 auto}
 </div>
 <div class="cta"><a href="index.html">✨ 我也要测试 ✨</a></div>
 
+<script src="data.js"></script>
+<script src="render.js"></script>
 <script>
-const dims = [
-  {name:"颜值",desc:"五官风格、面部记忆点与整体上镜氛围"},
-  {name:"身材",desc:"身形轮廓、比例观感与造型呈现"},
-  {name:"演技",desc:"情绪表达、角色投入与镜头叙事感"},
-  {name:"崩坏反差",desc:"反差张力、意外感与不按套路的表现力"},
-  {name:"公众形象",desc:"辨识度、职业形象与公众认知标签"},
-  {name:"陪伴感",desc:"亲近感、松弛度与长期相处的舒适感"}
-];
-const ICONS = ["👁","💃","🎭","⚡","🌟","💞"];
-const genNames = ["一代","二代","三代","四代","五代"];
 let results = [], curIdx = 0;
 const $ = id => document.getElementById(id);
 
-function toArr(x){
-  if (Array.isArray(x)) return x;
-  if (x && typeof x === "object") return Object.keys(x).map(function(k){ return {gen:k, result:x[k]}; });
-  return [];
-}
-function genLabel(g){ const i = Number(String(g).replace("gen","")) - 1; return genNames[i] || String(g); }
-
-function normResult(r){
-  r = r || {};
-  const w = (r.winner && typeof r.winner === "object") ? r.winner : {name:String(r.winner||"未知原型"),desc:"",summary:"",detail:"",aspects:{}};
-  if (!w.aspects) w.aspects = {};
-  const sc = Array.isArray(r.scores) ? r.scores : [0,0,0,0,0,0];
-  const ch = Array.isArray(r.champions) ? r.champions.map(function(c){
-    return (c && typeof c === "object") ? c : {name:String(c||"—"),desc:"",summary:"",detail:"",aspects:{}};
-  }) : [];
-  const rn = (r.runner && typeof r.runner === "object") ? r.runner : {name:r.runner?String(r.runner):"—",gap:null};
-  return {w:w,sc:sc,ch:ch,rn:rn};
-}
-
-function dimBlocks(from,to,sc,ch){
-  let s = "";
-  for (let i = from; i < to; i++) {
-    const c = ch[i] || {name:"—",aspects:{}};
-    const ca = (c.aspects && c.aspects[dims[i].name]) || "";
-    s += '<div class="dim-block"><div class="dim-header-row">'
-      + '<span class="dim-name-score">' + dims[i].name + '（' + sc[i] + '分）</span>'
-      + '<span class="dim-champion">最像：' + c.name + '</span></div>'
-      + '<div class="bar-container"><div class="bar-fill" style="width:' + sc[i] + '%"></div></div>'
-      + '<div class="dim-desc-text">💡 ' + dims[i].desc + (ca ? '｜' + c.name + '：' + ca : '') + '</div></div>';
-  }
-  return s;
-}
-
-function dimSections(from,to,sc,ch,asp){
-  let s = "";
-  for (let i = from; i < to; i++) {
-    const c = ch[i] || {name:"—"};
-    s += '<div class="b-dim-section"><div class="b-dim-title">' + ICONS[i] + ' ' + dims[i].name + '</div>'
-      + '<div class="b-dim-text"><b style="color:#d8b4fe">' + (asp[dims[i].name] || "—") + '</b>（' + sc[i] + '分）<br>'
-      + dims[i].desc + '<br><span style="color:#888">该维度最接近：' + c.name + '</span></div></div>';
-  }
-  return s;
-}
-
-function buildPages(r,label,times){
-  const n = normResult(r), w = n.w, sc = n.sc, ch = n.ch, rn = n.rn;
-  const asp = w.aspects || {};
-  const tag = '<div class="test-index-tag">第 ' + times + ' 次测试</div>';
-  const t2 = (w.desc ? w.desc + " " : "") + w.name;
-  let h = "";
-  h += '<div class="page-card">' + tag
-    + '<div class="a-page-title">JAV ARCHETYPE ARCHIVE · ' + label + '</div>'
-    + '<h2 class="a-page-name">' + w.name + '</h2>'
-    + '<div class="a-page-desc">' + (w.desc || "") + '</div>'
-    + '<div class="radar-box"><h4>✨ 本命气质魂 ✨</h4><canvas id="radarCanvas" width="400" height="400"></canvas></div>'
-    + '<div class="a-page-summary">' + (w.summary || w.detail || "") + '</div></div>';
-  h += '<div class="page-card">' + tag + '<div class="b-page-desc-large">' + t2 + '</div>'
-    + '<div class="b-page-dimensions-list">' + dimSections(0,3,sc,ch,asp) + '</div>'
-    + '<div class="b-page-name-small">—— 匹配原型 ——</div></div>';
-  h += '<div class="page-card">' + tag + '<div class="c-page-desc-medium">' + t2 + '</div>'
-    + '<div class="b-page-dimensions-list">' + dimSections(3,6,sc,ch,asp) + '</div>'
-    + '<div class="b-page-name-small">—— 匹配原型 ——</div></div>';
-  h += '<div class="page-card">' + tag + '<div class="c-page-title">🧬 六维深度解析</div>' + dimBlocks(0,3,sc,ch) + '</div>';
-  h += '<div class="page-card">' + tag + '<div class="c-page-title">🧬 六维深度解析</div>' + dimBlocks(3,6,sc,ch)
-    + '<p class="note" style="margin-top:18px">第二接近原型：' + rn.name
-    + ((rn.gap !== null && rn.gap !== undefined) ? '（距离差 ' + rn.gap + '）' : '') + '。结果仅供娱乐参考。</p></div>';
-  return h;
-}
-
-function drawRadar(cv,sc,ch){
-  if (!cv || !sc) return;
-  const ctx = cv.getContext("2d"), W = 400, H = 400;
-  cv.width = W; cv.height = H;
-  const cx = W/2, cy = H/2, R = 130, MAX = 100;
-  ctx.clearRect(0,0,W,H);
-  for (let lv = 1; lv <= 5; lv++) {
-    const r = R/5*lv;
-    ctx.beginPath();
-    for (let i = 0; i < 6; i++) {
-      const a = Math.PI*2/6*i - Math.PI/2;
-      const x = cx + r*Math.cos(a), y = cy + r*Math.sin(a);
-      if (i === 0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-    }
-    ctx.closePath(); ctx.strokeStyle = "#333"; ctx.lineWidth = 1; ctx.stroke();
-  }
-  for (let i = 0; i < 6; i++) {
-    const a = Math.PI*2/6*i - Math.PI/2;
-    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+R*Math.cos(a), cy+R*Math.sin(a));
-    ctx.strokeStyle = "#444"; ctx.stroke();
-  }
-  const pts = [];
-  ctx.beginPath();
-  for (let i = 0; i < 6; i++) {
-    const a = Math.PI*2/6*i - Math.PI/2, r = sc[i]/MAX*R;
-    const x = cx + r*Math.cos(a), y = cy + r*Math.sin(a);
-    pts.push({x:x,y:y,a:a});
-    if (i === 0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-  }
-  ctx.closePath(); ctx.fillStyle = "rgba(147,51,234,0.32)"; ctx.fill();
-  ctx.strokeStyle = "#9333ea"; ctx.lineWidth = 2; ctx.stroke();
-  ctx.textBaseline = "middle";
-  for (let i = 0; i < 6; i++) {
-    const p = pts[i];
-    ctx.beginPath(); ctx.arc(p.x,p.y,4,0,Math.PI*2); ctx.fillStyle = "#c084fc"; ctx.fill();
-    const cos = Math.cos(p.a);
-    ctx.textAlign = (Math.abs(cos) < 0.2) ? "center" : (cos > 0 ? "right" : "left");
-    const off = 165, tx = cx + off*cos, ty = cy + off*Math.sin(p.a);
-    let nm = (ch[i] && ch[i].name) ? String(ch[i].name) : "";
-    if (nm.length > 6) nm = nm.slice(0,6);
-    const top = (i === 0 || i === 1 || i === 5);
-    if (top) {
-      ctx.font = "bold 15px sans-serif"; ctx.fillStyle = "#fff"; ctx.fillText(nm,tx,ty-30);
-      ctx.font = "bold 13px sans-serif"; ctx.fillStyle = "#c084fc"; ctx.fillText(dims[i].name,tx,ty-12);
-      ctx.font = "12px sans-serif"; ctx.fillStyle = "#888"; ctx.fillText(sc[i]+"分",tx,ty+6);
-    } else {
-      ctx.font = "12px sans-serif"; ctx.fillStyle = "#888"; ctx.fillText(sc[i]+"分",tx,ty-6);
-      ctx.font = "bold 13px sans-serif"; ctx.fillStyle = "#c084fc"; ctx.fillText(dims[i].name,tx,ty+12);
-      ctx.font = "bold 15px sans-serif"; ctx.fillStyle = "#fff"; ctx.fillText(nm,tx,ty+30);
-    }
-  }
-}
-
-function renderTabs(){
-  $("tabs").innerHTML = results.map(function(rec,i){
-    return '<button class="' + (i===curIdx?"on":"") + '" onclick="switchTo(' + i + ')">第 ' + (i+1) + ' 次 · ' + genLabel(rec.gen) + '</button>';
+function renderTabs() {
+  $("tabs").innerHTML = results.map(function (rec, i) {
+    return '<button class="' + (i === curIdx ? "on" : "") + '" onclick="switchTo(' + i + ')">第 ' + (i + 1) + ' 次 · ' + genLabel(rec.gen) + '</button>';
   }).join("");
 }
 
-function paint(){
+function paint() {
   const rec = results[curIdx];
-  $("posters").innerHTML = buildPages(rec.result, genLabel(rec.gen), curIdx+1);
-  setTimeout(function(){
-    const n = normResult(rec.result);
-    const cv = document.getElementById("radarCanvas");
-    if (cv) drawRadar(cv, n.sc, n.ch);
-  }, 120);
+  $("posters").innerHTML = buildPages(rec, curIdx + 1, false);
+  setTimeout(function () { paintRadar(rec); }, 120);
 }
 
-function switchTo(i){ curIdx = i; renderTabs(); paint(); window.scrollTo(0,0); }
+function switchTo(i) { curIdx = i; renderTabs(); paint(); window.scrollTo(0, 0); }
 
-async function load(){
+async function load() {
   const c = new URLSearchParams(location.search).get("code");
   if (!c) { $("posters").innerHTML = '<div class="loading">链接无效，请让朋友重新分享。</div>'; return; }
   try {
-    const r = await fetch("/api/check", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({code:c.toUpperCase()})});
+    const r = await fetch("/api/check", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ code: c.toUpperCase() }) });
     const d = await r.json();
     results = toArr(d.results);
     if (!r.ok || !results.length) { $("posters").innerHTML = '<div class="loading">未找到测试结果。</div>'; return; }
     curIdx = results.length - 1;
-    renderTabs();
-    paint();
+    renderTabs(); paint();
   } catch (e) {
     $("posters").innerHTML = '<div class="loading">加载失败，请稍后重试。</div>';
   }
