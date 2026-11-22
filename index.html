@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>日本女优气质原型匹配系统</title>
 <style>
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -421,7 +421,7 @@ $("start").onclick = async () => {
   if (!/^[A-Z0-9]{6}$/.test(code)) return $("msg").textContent = "请输入6位授权码";
   
   $("start").disabled = true;
-  $("msg").textContent = "验证中..."; // 增加提示，防止用户以为点不动
+  $("msg").textContent = "验证中..."; 
   $("msg").style.color = "#d8b4fe";
   
   try {
@@ -445,7 +445,7 @@ $("start").onclick = async () => {
     $("msg").textContent = "";
   } catch (e) {
     $("msg").textContent = "验证失败: " + e.message;
-    $("msg").style.color = "#f87171"; // 红色错误提示
+    $("msg").style.color = "#f87171"; 
   } finally {
     $("start").disabled = false;
   }
