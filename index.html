@@ -6,147 +6,222 @@
 <title>日本女优气质原型匹配系统</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
+:root{
+--bg:#0a0710;--surface:#170f26;--surface2:#1e1533;--line:#2c2140;
+--v1:#7c3aed;--v2:#9333ea;--v3:#a855f7;--v4:#c084fc;--v5:#e9d5ff;
+--mag:#db2777;--ind:#6366f1;--ok:#34d399;--warn:#fbbf24;--bad:#fb7185;
+--txt:#f4f0fa;--txt2:#b9aecb;--txt3:#8d82a3;--scrim:rgba(6,3,12,.94);
+--sb-track:#150e22;--sb-thumb:#6d34c8;--sb-hover:#a855f7;
+}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:#0a0a0a;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;height:100vh;overflow:hidden}
-.wrap{max-width:520px;margin:0 auto;padding:22px;height:100vh;display:flex;flex-direction:column}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;height:100vh;overflow:hidden}
+.aurora{position:fixed;inset:-25%;z-index:0;pointer-events:none;filter:blur(80px);opacity:.55}
+.aurora i{position:absolute;display:block;border-radius:50%;mix-blend-mode:screen;animation:drift 28s ease-in-out infinite}
+.aurora i:nth-child(1){width:52vw;height:52vw;left:2%;top:4%;background:radial-gradient(circle,#7c3aed,transparent 68%)}
+.aurora i:nth-child(2){width:46vw;height:46vw;right:0;top:26%;background:radial-gradient(circle,#db2777,transparent 68%);animation-delay:-9s}
+.aurora i:nth-child(3){width:44vw;height:44vw;left:18%;bottom:0;background:radial-gradient(circle,#4f46e5,transparent 68%);animation-delay:-17s}
+@keyframes drift{0%,100%{transform:translate3d(0,0,0) scale(1)}33%{transform:translate3d(5%,-6%,0) scale(1.12)}66%{transform:translate3d(-5%,5%,0) scale(.94)}}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.045;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{position:relative;z-index:2;max-width:520px;margin:0 auto;padding:22px;height:100vh;display:flex;flex-direction:column}
 .hidden{display:none!important}
-.wrap>section:not(#result):not(.hidden){flex:1 1 auto;min-height:0;overflow-y:auto}
-h1{font-size:26px;line-height:1.3;background:linear-gradient(135deg,#9333ea,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-p{color:#999;line-height:1.65}
-.hero{text-align:center;padding:34px 0}
-input,button{width:100%;padding:14px;border-radius:11px;border:1px solid #333;background:#171717;color:#fff;font-size:15px;margin:7px 0;transition:all .2s ease}
-button{background:linear-gradient(135deg,#9333ea,#c084fc);border:0;font-weight:700;cursor:pointer}
-button:hover{opacity:.9;transform:translateY(-1px)}
-button:disabled{opacity:.4;cursor:not-allowed;transform:none}
-.ghost{background:#1a1a1a!important;border:1px solid #333!important;color:#d8b4fe!important}
-.ghost:hover{background:#2e1065!important;border-color:#c084fc!important}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.card{background:#151515;border:1px solid #292929;border-radius:12px;padding:15px;text-align:center;cursor:pointer;transition:all .2s ease}
-.card:hover{border-color:#c084fc;background:#1a1025}
-.card b{color:#d8b4fe}
-.muted{color:#888;font-size:12px}
-.note{font-size:11px;color:#777;margin-top:10px}
-a{color:#d8b4fe;text-decoration:none}
-a:hover{color:#fff;text-decoration:underline}
-.progress{height:5px;background:#292929;border-radius:5px;margin:18px 0}
-.fill{height:100%;background:linear-gradient(90deg,#9333ea,#c084fc);width:0;transition:width .3s ease}
-.option{display:block;width:100%;text-align:left;line-height:1.5;margin:10px 0;cursor:pointer;background:#151515;border:1px solid #292929;border-radius:12px;padding:15px;color:#fff;font-size:14px;font-weight:400}
-.option:hover{border-color:#c084fc}
-.option.sel{border-color:#c084fc;background:#2e1065}
+.wrap>section:not(#result):not(.hidden){flex:1 1 auto;min-height:0;overflow-y:auto;padding-right:4px}
+h1{font-size:26px;line-height:1.3;margin:0 0 12px;background:linear-gradient(115deg,var(--v5),var(--v4) 40%,#f472b6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+h2{margin:0}
+p{color:var(--txt2);line-height:1.7;margin:0 0 12px}
+a{color:var(--v4);text-decoration:none}
+a:hover{color:var(--v5);text-decoration:underline}
+.hero{text-align:center;padding:26px 0 34px;animation:up .6s both}
+.hero>*{animation:up .6s both}
+.hero>*:nth-child(2){animation-delay:.08s}
+.hero>*:nth-child(3){animation-delay:.16s}
+.hero>*:nth-child(4){animation-delay:.24s}
+.hero>*:nth-child(5){animation-delay:.32s}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.badge-top{display:inline-block;font-size:11px;letter-spacing:3px;color:var(--v4);border:1px solid var(--line);background:rgba(124,58,237,.12);padding:5px 12px;border-radius:99px;margin-bottom:16px}
+input{width:100%;padding:16px;border-radius:13px;border:1px solid var(--line);background:#120b1e;color:var(--txt);font-size:22px;letter-spacing:6px;text-align:center;text-transform:uppercase;outline:none;transition:.22s;margin:6px 0}
+input::placeholder{letter-spacing:1px;font-size:14px;color:var(--txt3)}
+input:focus{border-color:var(--v3);box-shadow:0 0 0 4px rgba(168,85,247,.16)}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+.btn{display:block;width:100%;padding:15px;border-radius:13px;font-size:15px;font-weight:800;margin:8px 0;transition:transform .18s,box-shadow .22s,opacity .2s;text-align:center}
+.btn-primary{background:linear-gradient(115deg,var(--v1),var(--v2) 45%,var(--mag));color:#fff;box-shadow:0 8px 24px -10px rgba(147,51,234,.9)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 30px -10px rgba(219,39,119,.85)}
+.btn-primary:active{transform:translateY(0) scale(.99)}
+.btn-ghost{background:var(--surface);border:1px solid var(--line);color:var(--v5)}
+.btn-ghost:hover{border-color:var(--v3);background:var(--surface2);transform:translateY(-2px)}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.muted{color:var(--txt3);font-size:12px}
+.note{font-size:11px;color:var(--txt3);line-height:1.7;margin-top:12px}
+#msg{min-height:20px;margin-top:10px;font-size:13px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:4px 0 6px}
+.gen-card{background:linear-gradient(160deg,var(--surface),#130c20);border:1px solid var(--line);border-radius:16px;padding:16px 14px;text-align:center;cursor:pointer;transition:.22s;position:relative;overflow:hidden}
+.gen-card::after{content:"";position:absolute;inset:0;background:linear-gradient(140deg,rgba(168,85,247,.16),transparent 60%);opacity:0;transition:.25s}
+.gen-card:hover{border-color:var(--v3);transform:translateY(-3px)}
+.gen-card:hover::after{opacity:1}
+.gen-card b{display:block;color:var(--v5);font-size:15px;margin-bottom:6px;position:relative}
+.gen-card .yr{color:var(--txt3);font-size:11px;position:relative}
+.gen-card .cnt{display:inline-block;margin-top:8px;font-size:10px;color:var(--v4);border:1px solid var(--line);border-radius:99px;padding:2px 8px;position:relative}
+.gen-card .lk{display:block;margin-top:9px;font-size:11px;position:relative}
+.progress{height:6px;background:#1c1330;border-radius:99px;margin:16px 0;overflow:hidden;border:1px solid var(--line)}
+.fill{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--ind),var(--v2) 50%,var(--mag));transition:width .3s ease;position:relative}
+.fill::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);animation:shim 1.6s linear infinite}
+@keyframes shim{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+.qhead{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--txt3)}
+.qhead b{color:var(--v4);font-size:15px}
+#question{font-size:18px;line-height:1.6;margin:6px 0 18px;color:var(--txt)}
+.option{display:block;width:100%;text-align:left;line-height:1.6;margin:10px 0;padding:15px 16px;border-radius:14px;background:var(--surface);border:1px solid var(--line);color:var(--txt2);font-size:14px;transition:.2s}
+.option:hover{border-color:var(--v3);color:var(--txt);transform:translateX(3px)}
+.option.sel{border-color:var(--v4);background:linear-gradient(115deg,rgba(124,58,237,.28),rgba(219,39,119,.16));color:#fff;box-shadow:0 0 0 3px rgba(168,85,247,.14);animation:pop .28s}
+@keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.025)}100%{transform:scale(1)}}
 .row{display:flex;gap:10px}
-.row button{flex:1}
-.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-.tabs button{width:auto;padding:8px 14px;font-size:12px;background:#171717;color:#d8b4fe;margin:0;border:1px solid #292929;border-radius:8px;font-weight:400}
-.tabs button.on{background:#2e1065;border-color:#c084fc;color:#fff}
+.row .btn{flex:1}
+.big-ico{font-size:56px;margin-bottom:8px;animation:float 3.2s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.spin{display:inline-block;animation:spin 2.4s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
+.tab{padding:8px 14px;font-size:12px;background:var(--surface);color:var(--txt2);border:1px solid var(--line);border-radius:99px;transition:.2s}
+.tab:hover{border-color:var(--v3);color:var(--txt)}
+.tab.on{background:linear-gradient(115deg,var(--v1),var(--mag));color:#fff;border-color:transparent;box-shadow:0 6px 18px -8px rgba(219,39,119,.9)}
 #result{flex:1 1 auto;min-height:0;flex-direction:column;overflow:hidden}
 #result:not(.hidden){display:flex}
 #result>.tabs{flex:0 0 auto}
 .result-container{flex:1 1 0;height:0;min-height:0;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior-y:contain;scrollbar-width:none;-ms-overflow-style:none;position:relative}
 .result-container::-webkit-scrollbar{display:none}
-.page-card{min-height:100%;scroll-snap-align:start;background:#151515;border:1px solid #2a2a2a;border-radius:20px;padding:30px 24px 60px;margin-bottom:20px;position:relative;display:flex;flex-direction:column;overflow:hidden}
-.page-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#9333ea,#c084fc);border-radius:20px 20px 0 0}
-.test-index-tag{position:absolute;top:15px;right:15px;background:rgba(147,51,234,.18);color:#d8b4fe;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:bold}
-.a-page-title{font-size:12px;color:#c084fc;letter-spacing:2px;text-align:center;margin:10px 0 15px}
-.a-page-name{font-size:28px;font-weight:800;text-align:center;margin:0 0 8px;background:linear-gradient(135deg,#fff,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.a-page-desc{font-size:16px;font-weight:bold;text-align:center;color:#fff;margin:0 0 15px}
-.radar-box{background:#0f0f0f;border-radius:12px;padding:10px 20px 20px;margin:10px 0;text-align:center;flex-shrink:0;border:1px solid #222}
-.radar-box h4{margin:0 0 10px;color:#d8b4fe;font-size:15px}
-canvas{max-width:100%;height:auto;display:block;margin:0 auto}
-.a-page-summary{font-size:14px;color:#ccc;line-height:1.6;text-align:center;background:rgba(147,51,234,.06);padding:16px;border-radius:8px;border-left:3px solid #9333ea;margin-top:10px}
-.b-page-desc-large{font-size:24px;font-weight:900;text-align:center;margin:0 0 20px;line-height:1.3;letter-spacing:1px;background:linear-gradient(135deg,#fff,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.c-page-desc-medium{font-size:20px;font-weight:900;text-align:center;margin:0 0 20px;line-height:1.3;background:linear-gradient(135deg,#fff,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.b-page-dimensions-list{display:flex;flex-direction:column;gap:20px;flex:1;overflow-y:auto;padding-right:5px}
-.b-dim-section{background:rgba(255,255,255,.03);border-radius:12px;padding:16px;border-left:3px solid #9333ea}
-.b-dim-title{font-size:18px;font-weight:700;color:#fff;margin-bottom:8px}
-.b-dim-text{font-size:14px;color:#ccc;line-height:1.6}
-.b-page-name-small{font-size:13px;text-align:center;color:#555;margin-top:25px;letter-spacing:2px}
-.c-page-title{font-size:18px;font-weight:bold;color:#c084fc;text-align:center;margin:0 0 25px}
-.dim-block{margin-bottom:24px;border-bottom:1px solid #222;padding-bottom:20px}
-.dim-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
-.dim-header-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
-.dim-name-score{font-size:15px;font-weight:bold;color:#fff}
-.dim-champion{font-size:14px;font-weight:bold;color:#c084fc}
-.bar-container{width:100%;height:10px;border:1px solid #9333ea;border-radius:5px;margin:10px 0;overflow:hidden}
-.bar-fill{height:100%;background:#9333ea;border-radius:5px}
-.dim-desc-text{font-size:12px;color:#888;line-height:1.5;margin-top:8px}
-.page-f{justify-content:center;align-items:center;padding:20px 24px}
-.page-f .test-index-tag{display:none}
-.f-actions{width:100%;max-width:320px;display:flex;flex-direction:column;gap:12px}
-.btn-save-poster,.btn-share-link,.btn-retest{display:block;width:100%;padding:14px;margin:0;border-radius:10px;font-size:15px;font-weight:bold;cursor:pointer}
-.btn-save-poster{background:linear-gradient(135deg,#9333ea,#c084fc);color:#fff;border:0}
-.btn-share-link{background:#241436;color:#d8b4fe;border:1px solid #9333ea}
-.btn-retest{background:#1a1a1a;color:#fff;border:1px solid #333}
-.btn-more{display:block;width:100%;padding:14px;border-radius:10px;background:linear-gradient(135deg,#7c3aed,#db2777);color:#fff;font-size:15px;font-weight:bold;text-align:center;text-decoration:none}
-.btn-more:hover{opacity:.9;text-decoration:none}
-.f-tip{color:#666;font-size:12px;line-height:1.6;text-align:center;margin:8px 0 0}
-#scrollNav{position:fixed;right:15px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:15px;z-index:999}
-.scroll-btn{width:44px;height:44px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s ease;opacity:0;pointer-events:none;transform:scale(.8)}
+.page-card{min-height:100%;scroll-snap-align:start;background:linear-gradient(168deg,var(--surface),#120b1e);border:1px solid var(--line);border-radius:22px;padding:28px 22px;margin-bottom:20px;position:relative;display:flex;flex-direction:column;overflow:hidden;animation:cardIn .5s both}
+.page-card:nth-child(2){animation-delay:.05s}.page-card:nth-child(3){animation-delay:.1s}
+.page-card:nth-child(4){animation-delay:.15s}.page-card:nth-child(5){animation-delay:.2s}.page-card:nth-child(6){animation-delay:.25s}
+@keyframes cardIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.page-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--ind),var(--v2) 40%,var(--mag) 75%,var(--warn))}
+.card-body{flex:1 1 auto;min-height:0;overflow-y:auto;display:flex;flex-direction:column;padding-right:6px}
+.card-body::-webkit-scrollbar,#modalScroll::-webkit-scrollbar,.wrap>section::-webkit-scrollbar{width:8px}
+.card-body::-webkit-scrollbar-track,#modalScroll::-webkit-scrollbar-track,.wrap>section::-webkit-scrollbar-track{background:var(--sb-track);border-radius:99px}
+.card-body::-webkit-scrollbar-thumb,#modalScroll::-webkit-scrollbar-thumb,.wrap>section::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--v1),var(--mag));border-radius:99px;border:2px solid var(--sb-track)}
+.card-body::-webkit-scrollbar-thumb:hover,#modalScroll::-webkit-scrollbar-thumb:hover,.wrap>section::-webkit-scrollbar-thumb:hover{background:var(--sb-hover)}
+.card-body,#modalScroll,.wrap>section{scrollbar-width:thin;scrollbar-color:var(--sb-thumb) var(--sb-track)}
+.test-index-tag{position:absolute;top:14px;right:14px;background:rgba(124,58,237,.24);color:var(--v5);padding:4px 10px;border-radius:99px;font-size:10px;font-weight:700;border:1px solid var(--line);z-index:3}
+.a-page-title{font-size:11px;color:var(--v4);letter-spacing:2px;text-align:center;margin:6px 0 14px}
+.a-page-name{font-size:30px;font-weight:900;text-align:center;margin:0 0 8px;line-height:1.2;background:linear-gradient(115deg,#fff,var(--v5) 40%,#f472b6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.a-page-desc{font-size:15px;font-weight:800;text-align:center;color:var(--v4);margin:0 0 14px}
+.radar-box{background:radial-gradient(circle at 50% 40%,#150d24,#0d0716);border-radius:16px;padding:12px 14px 14px;margin:0 0 14px;text-align:center;border:1px solid var(--line);flex-shrink:0}
+.radar-box h4{margin:0 0 6px;color:var(--v5);font-size:14px}
+canvas{display:block;margin:0 auto;max-width:100%;height:auto}
+.radar-legend{display:flex;flex-wrap:wrap;gap:6px 10px;justify-content:center;margin-top:8px}
+.lg{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;color:var(--txt2)}
+.lg i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.lg b{color:var(--txt);font-size:11px}
+.a-page-summary{font-size:13px;color:var(--txt2);line-height:1.85;text-align:left;background:rgba(124,58,237,.09);padding:15px 16px;border-radius:12px;border-left:3px solid var(--v2)}
+.b-page-desc-large{font-size:23px;font-weight:900;text-align:center;margin:2px 0 18px;line-height:1.35;background:linear-gradient(115deg,#fff,var(--v4) 55%,#f472b6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.c-page-desc-medium{font-size:19px;font-weight:900;text-align:center;margin:2px 0 18px;line-height:1.35;background:linear-gradient(115deg,#fff,var(--v4) 55%,#f472b6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.b-page-dimensions-list,.dim-scroll{display:flex;flex-direction:column;gap:16px;flex:1 1 auto;min-height:0}
+.b-dim-section{background:rgba(255,255,255,.035);border-radius:14px;padding:15px;border-left:3px solid var(--hue)}
+.b-dim-title{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:800;color:var(--txt);margin-bottom:9px}
+.dim-ico{font-size:17px}
+.dim-chip{margin-left:auto;font-size:11px;font-weight:800;color:#0a0710;background:var(--hue);border-radius:99px;padding:2px 9px}
+.aspect-badge{display:inline-block;font-size:12px;font-weight:800;color:var(--hue);border:1px solid var(--hue);background:color-mix(in srgb,var(--hue) 14%,transparent);border-radius:99px;padding:3px 11px;margin-bottom:9px}
+.b-dim-text{font-size:13px;color:var(--txt2);line-height:1.85}
+.dim-meta{font-size:11px;color:var(--txt3);line-height:1.7;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.dim-formula{font-size:11px;color:var(--txt3);margin-top:6px;font-variant-numeric:tabular-nums}
+.dim-formula b{color:var(--hue)}
+.b-page-name-small{font-size:11px;text-align:center;color:var(--txt3);margin-top:16px;letter-spacing:2px}
+.c-page-title{font-size:17px;font-weight:800;color:var(--v4);text-align:center;margin:2px 0 18px}
+.dim-block{border-bottom:1px solid var(--line);padding-bottom:16px}
+.dim-block:last-child{border-bottom:none;padding-bottom:0}
+.dim-header-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:8px}
+.dim-name-score{font-size:14px;font-weight:800;color:var(--txt)}
+.dim-name-score em{font-style:normal;color:var(--hue);margin-left:6px;font-size:12px}
+.dim-champion{font-size:13px;font-weight:800;color:var(--hue);text-align:right}
+.bar-container{width:100%;height:9px;border:1px solid var(--line);background:#150e22;border-radius:99px;margin:8px 0 10px;overflow:hidden}
+.bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,color-mix(in srgb,var(--hue) 55%,#7c3aed),var(--hue));transition:width .6s ease}
+.dim-desc-text{font-size:12.5px;color:var(--txt2);line-height:1.85}
+.page-f{padding:22px}
+.f-body{justify-content:center;align-items:center;overflow:visible}
+.f-actions{width:100%;max-width:320px;display:flex;flex-direction:column;gap:11px}
+.btn-save-poster,.btn-share-link,.btn-retest,.btn-more{display:block;width:100%;padding:14px;border-radius:13px;font-size:15px;font-weight:800;text-align:center;transition:transform .18s,box-shadow .22s}
+.btn-save-poster{background:linear-gradient(115deg,var(--v1),var(--v2) 45%,var(--mag));color:#fff;box-shadow:0 8px 22px -10px rgba(219,39,119,.9)}
+.btn-share-link{background:rgba(124,58,237,.18);color:var(--v5);border:1px solid var(--v2)}
+.btn-retest{background:var(--surface2);color:var(--txt);border:1px solid var(--line)}
+.btn-more{background:linear-gradient(115deg,var(--ind),var(--mag));color:#fff;text-decoration:none;box-shadow:0 8px 22px -10px rgba(99,102,241,.9)}
+.btn-save-poster:hover,.btn-share-link:hover,.btn-retest:hover,.btn-more:hover{transform:translateY(-2px);text-decoration:none}
+.btn-save-poster:disabled{opacity:.5;transform:none}
+.f-tip{color:var(--txt3);font-size:11.5px;line-height:1.8;text-align:center;margin:6px 0 0}
+#scrollNav{position:fixed;right:14px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:14px;z-index:60}
+.scroll-btn{width:42px;height:42px;background:rgba(30,21,51,.82);border:1px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:.3s;opacity:0;pointer-events:none;transform:scale(.8);backdrop-filter:blur(8px)}
 .scroll-btn.visible{opacity:1;pointer-events:auto;transform:scale(1)}
-.scroll-btn:hover{background:rgba(147,51,234,.35);border-color:#c084fc}
-.scroll-btn svg{width:24px;height:24px;fill:#fff}
-#modal,#copyModal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);z-index:9999;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px}
-#modalScroll{width:92%;max-width:420px;max-height:70vh;overflow-y:auto;display:flex;flex-direction:column;gap:14px}
-#modalScroll img{width:100%;border-radius:12px}
-.closeX{position:absolute;top:18px;right:18px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer}
-.modalTip{color:#d8b4fe;font-size:14px;font-weight:bold;margin:0 0 12px;text-align:center}
-#copyArea{width:92%;max-width:420px;height:150px;background:#151515;color:#fff;border:1px solid #9333ea;border-radius:10px;padding:12px;font-size:13px;line-height:1.6}
-#copyBtn{width:auto;max-width:200px;margin-top:12px}
+.scroll-btn:hover{background:rgba(124,58,237,.5);border-color:var(--v4)}
+.scroll-btn svg{width:22px;height:22px;fill:var(--v5)}
+#modal,#copyModal{position:fixed;inset:0;background:var(--scrim);z-index:9999;display:none;flex-direction:column;align-items:center;justify-content:center;padding:22px;backdrop-filter:blur(6px)}
+#modal.open,#copyModal.open{display:flex;animation:fade .25s}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+#modalScroll{width:94%;max-width:420px;max-height:70vh;overflow-y:auto;display:flex;flex-direction:column;gap:14px;padding-right:6px}
+#modalScroll img{width:100%;border-radius:14px;border:1px solid var(--line);display:block}
+.close-x{position:absolute;top:18px;right:18px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.1);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;line-height:1}
+.close-x:hover{background:var(--v2)}
+.modal-tip{color:var(--v5);font-size:14px;font-weight:800;margin:0 0 12px;text-align:center}
+#copyArea{width:94%;max-width:420px;height:150px;background:#120b1e;color:var(--txt);border:1px solid var(--v2);border-radius:12px;padding:13px;font-size:13px;line-height:1.75;resize:none;outline:none}
+#copyBtn{max-width:220px;margin-top:12px}
+@media (max-width:400px){.a-page-name{font-size:26px}.b-page-desc-large{font-size:20px}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
+<div class="aurora"><i></i><i></i><i></i></div>
+<div class="grain"></div>
 
 <div id="scrollNav" class="hidden">
-  <div class="scroll-btn scroll-up" onclick="scrollPage(-1)"><svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg></div>
-  <div class="scroll-btn scroll-down" onclick="scrollPage(1)"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg></div>
+  <button class="scroll-btn scroll-up" onclick="scrollPage(-1)" aria-label="上一页"><svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg></button>
+  <button class="scroll-btn scroll-down" onclick="scrollPage(1)" aria-label="下一页"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg></button>
 </div>
 
 <main class="wrap">
   <section id="entry">
     <div class="hero">
+      <span class="badge-top">JAV ARCHETYPE MATCH</span>
       <h1>✨ 日本女优气质原型匹配</h1>
-      <p>30道代际专属情境题 · 六维偏好画像 · 综合原型与维度冠军</p>
-      <input id="code" maxlength="6" placeholder="输入6位授权码" autocomplete="off">
-      <button id="start">开始测试</button>
-      <div id="msg" class="muted" style="min-height:18px;margin-top:10px;"></div>
+      <p>30 道代际专属情境题 · 六维偏好画像<br>综合原型与逐维冠军，生成 A–F 六页专属档案</p>
+      <input id="code" maxlength="6" placeholder="输入 6 位授权码" autocomplete="off">
+      <button id="start" class="btn btn-primary">开始测试</button>
+      <div id="msg" class="muted"></div>
     </div>
   </section>
 
   <section id="choose" class="hidden">
+    <span class="badge-top">STEP 01 · 选择宇宙</span>
     <h1>选择测试代际</h1>
-    <p id="remain" style="color:#c084fc;font-weight:bold;"></p>
+    <p id="remain" style="color:var(--v4);font-weight:800"></p>
     <div class="grid" id="genCards"></div>
-    <button id="viewResultBtn" class="ghost hidden">📂 查看已测代际结果</button>
+    <button id="viewResultBtn" class="btn btn-ghost hidden">📂 查看已测代际结果</button>
     <p class="note">按女优首次正式出道的大致年份划分。候选人均为成年公众人物；人物原型是娱乐性风格类比，不代表真人性格或私生活。</p>
   </section>
 
   <section id="quiz" class="hidden">
-    <div class="muted">第 <span id="num">1</span> / 30 题</div>
+    <div class="qhead"><span>题目 <b id="num">1</b> / 30</span><span id="dimTag">—</span></div>
     <div class="progress"><div id="fill" class="fill"></div></div>
-    <h2 id="question" style="font-size:18px;line-height:1.5;margin-bottom:20px;"></h2>
+    <h2 id="question"></h2>
     <div id="options"></div>
     <div class="row">
-      <button id="prev" class="ghost">← 上一题</button>
-      <button id="next">下一题 →</button>
+      <button id="prev" class="btn btn-ghost">← 上一题</button>
+      <button id="next" class="btn btn-primary">下一题 →</button>
     </div>
   </section>
 
   <section id="confirm" class="hidden">
     <div class="hero">
-      <div style="font-size:56px;margin-bottom:10px;">🎯</div>
+      <div class="big-ico">🎯</div>
       <h1>你已完成全部 30 题</h1>
-      <p>系统将解析你的六维偏好向量，在候选原型中匹配你的本命原型。</p>
-      <button id="calcBtn">开始测算</button>
-      <button id="backQuizBtn" class="ghost">返回检查答案</button>
+      <p>系统将解析你的六维偏好向量，在候选原型中匹配你的本命原型与逐维冠军。</p>
+      <button id="calcBtn" class="btn btn-primary">开始测算</button>
+      <button id="backQuizBtn" class="btn btn-ghost">返回检查答案</button>
     </div>
   </section>
 
   <section id="calc" class="hidden">
     <div class="hero">
-      <div style="font-size:56px;margin-bottom:10px;">💫</div>
+      <div class="big-ico"><span class="spin">💫</span></div>
       <h1>正在生成你的专属档案</h1>
       <div class="progress"><div id="calcFill" class="fill"></div></div>
-      <div id="calcText" class="muted" style="color:#c084fc;">正在解析你的 30 个选择...</div>
-      <div id="calcPct" class="muted" style="margin-top:6px;">0%</div>
+      <div id="calcText" style="color:var(--v4);font-size:14px;min-height:22px">正在解析你的 30 个选择...</div>
+      <div id="calcPct" class="muted" style="margin-top:6px">0%</div>
     </div>
   </section>
 
@@ -157,23 +232,29 @@ canvas{max-width:100%;height:auto;display:block;margin:0 auto}
 </main>
 
 <div id="modal">
-  <span class="closeX" onclick="closeModal()">×</span>
-  <p class="modalTip">👇 长按图片保存到相册 👇</p>
+  <button class="close-x" onclick="closeModal()" aria-label="关闭">×</button>
+  <p class="modal-tip">👇 长按图片保存到相册 👇</p>
   <div id="modalScroll"></div>
 </div>
 
 <div id="copyModal">
-  <span class="closeX" onclick="closeCopy()">×</span>
-  <p class="modalTip">👇 复制下面文案发给朋友 👇</p>
+  <button class="close-x" onclick="closeCopy()" aria-label="关闭">×</button>
+  <p class="modal-tip">👇 复制下面文案发给朋友 👇</p>
   <textarea id="copyArea" readonly></textarea>
-  <button id="copyBtn">一键复制</button>
+  <button id="copyBtn" class="btn btn-primary">一键复制</button>
 </div>
 
 <script src="data.js"></script>
 <script src="render.js"></script>
 <script>
+const $ = function (id) { return document.getElementById(id); };
 let code = "", remaining = 0, currentGen = "", qIndex = 0, answers = [], serverResults = [], curIdx = 0;
-const $ = id => document.getElementById(id);
+
+if (typeof questions === "undefined" || typeof people === "undefined" || typeof genInfo === "undefined") {
+  $("msg").textContent = "数据文件 data.js 未加载，请确认它与 index.html 在同一目录";
+  $("msg").style.color = "var(--bad)";
+  $("start").disabled = true;
+}
 
 async function api(url, body) {
   const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
@@ -182,72 +263,71 @@ async function api(url, body) {
   if (!r.ok) throw new Error(d.error || ("请求失败 HTTP " + r.status));
   return d;
 }
-
 function show(id) {
   ["entry", "choose", "quiz", "confirm", "calc", "result"].forEach(function (x) { $(x).classList.toggle("hidden", x !== id); });
   $("scrollNav").classList.toggle("hidden", id !== "result");
   window.scrollTo(0, 0);
 }
-
 function checkScroll() {
   const c = document.querySelector(".result-container");
   const up = document.querySelector(".scroll-up"), dn = document.querySelector(".scroll-down");
   if (!c || !up || !dn) return;
-  up.classList.toggle("visible", c.scrollTop > 50);
-  dn.classList.toggle("visible", c.scrollTop < c.scrollHeight - c.clientHeight - 50);
+  up.classList.toggle("visible", c.scrollTop > 40);
+  dn.classList.toggle("visible", c.scrollTop < c.scrollHeight - c.clientHeight - 40);
 }
-
 function initScrollButtons() {
   const c = document.querySelector(".result-container");
   if (!c) return;
-  if (c.dataset.bound !== "1") { c.dataset.bound = "1"; c.addEventListener("scroll", checkScroll); }
+  if (c.dataset.bound !== "1") { c.dataset.bound = "1"; c.addEventListener("scroll", checkScroll, { passive: true }); }
   checkScroll();
 }
-
 function scrollPage(d) {
   const c = document.querySelector(".result-container");
   if (!c) return;
   const card = c.querySelector(".page-card");
   c.scrollBy({ top: d * (card ? card.offsetHeight + 20 : c.clientHeight), behavior: "smooth" });
 }
-
 function renderGenCards() {
   $("genCards").innerHTML = genInfo.map(function (g, i) {
     const n = i + 1;
-    return '<div class="card" onclick="chooseGen(\'gen' + n + '\')">'
-      + '<b>' + g.name + ' · ' + g.tag + '</b>'
-      + '<p class="muted">' + g.years + '</p>'
-      + '<span class="muted">30道专属题</span>'
-      + '<p><a href="gen' + n + '.html" onclick="event.stopPropagation()">📖 查看候选池</a></p>'
+    return '<div class="gen-card" role="button" tabindex="0" onclick="chooseGen(\'gen' + n + '\')">'
+      + '<b>' + esc(g.name) + ' · ' + esc(g.tag) + '</b>'
+      + '<span class="yr">' + esc(g.years) + '</span>'
+      + '<span class="cnt">30 道专属题</span>'
+      + '<a class="lk" href="gen' + n + '.html" onclick="event.stopPropagation()">📖 了解该代原型</a>'
       + '</div>';
   }).join("");
 }
-
 function gotoChoose() {
   $("remain").textContent = "该授权码剩余测试次数：" + remaining;
   renderGenCards();
   $("viewResultBtn").classList.toggle("hidden", serverResults.length === 0);
   show("choose");
 }
-
 $("start").onclick = async function () {
   code = $("code").value.trim().toUpperCase();
-  if (!/^[A-Z0-9]{6}$/.test(code)) { $("msg").textContent = "请输入6位授权码"; $("msg").style.color = "#f87171"; return; }
+  if (!/^[A-Z0-9]{6}$/.test(code)) {
+    $("msg").textContent = "请输入 6 位字母或数字授权码";
+    $("msg").style.color = "var(--bad)";
+    return;
+  }
   $("start").disabled = true;
-  $("msg").textContent = "验证中..."; $("msg").style.color = "#d8b4fe";
+  $("msg").textContent = "验证中...";
+  $("msg").style.color = "var(--v4)";
   try {
     const d = await api("/api/check", { code: code });
     remaining = d.remaining || 0;
     serverResults = toArr(d.results);
     if (remaining > 0) { gotoChoose(); $("msg").textContent = ""; }
     else if (serverResults.length > 0) { showResultView(); }
-    else { $("msg").textContent = "该授权码次数已用完，且无历史记录"; $("msg").style.color = "#f87171"; }
+    else { $("msg").textContent = "该授权码次数已用完，且无历史记录"; $("msg").style.color = "var(--bad)"; }
   } catch (e) {
-    $("msg").textContent = "验证失败: " + e.message; $("msg").style.color = "#f87171";
+    $("msg").textContent = "验证失败：" + e.message;
+    $("msg").style.color = "var(--bad)";
   } finally { $("start").disabled = false; }
 };
-
 $("code").addEventListener("input", function (e) { e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ""); });
+$("code").addEventListener("keypress", function (e) { if (e.key === "Enter") $("start").click(); });
 $("viewResultBtn").onclick = function () { showResultView(); };
 
 function chooseGen(gen) {
@@ -255,21 +335,21 @@ function chooseGen(gen) {
   currentGen = gen; qIndex = 0; answers = new Array(30).fill(null);
   renderQ(); show("quiz");
 }
-
 function renderQ() {
   const q = questions[currentGen][qIndex];
   $("num").textContent = qIndex + 1;
+  $("dimTag").textContent = ICONS[q.dim] + " " + dimName(q.dim);
+  $("dimTag").style.color = DIM_HUES[q.dim];
   $("fill").style.width = ((qIndex + 1) / 30 * 100) + "%";
   $("question").textContent = q.q;
   $("options").innerHTML = q.opts.map(function (o, i) {
     return '<button class="option ' + (answers[qIndex] === i ? "sel" : "") + '" onclick="pick(' + i + ')">'
-      + String.fromCharCode(65 + i) + '. ' + o.t + '</button>';
+      + String.fromCharCode(65 + i) + '. ' + esc(o.t) + '</button>';
   }).join("");
   $("prev").disabled = (qIndex === 0);
   $("next").textContent = (qIndex === 29) ? "提交答案" : "下一题 →";
   $("next").disabled = (answers[qIndex] === null);
 }
-
 function pick(i) { answers[qIndex] = i; renderQ(); }
 $("prev").onclick = function () { if (qIndex > 0) { qIndex--; renderQ(); } };
 $("next").onclick = function () {
@@ -297,36 +377,35 @@ function startCalc() {
     if (si !== last) { $("calcText").textContent = steps[si]; last = si; }
   }, 100);
 }
-
 function calcScores() {
-  const raw = new Array(6).fill(0), mx = new Array(6).fill(0);
+  const raw = [0, 0, 0, 0, 0, 0], max = [0, 0, 0, 0, 0, 0];
   answers.forEach(function (a, i) {
     const q = questions[currentGen][i];
     let hi = 0;
     q.opts.forEach(function (o) { if (o.v > hi) hi = o.v; });
     raw[q.dim] += q.opts[a].v;
-    mx[q.dim] += hi;
+    max[q.dim] += hi;
   });
-  return { raw: raw, max: mx, scores: raw.map(function (v, i) { return pct(v, mx[i]); }) };
+  return { raw: raw, max: max, scores: raw.map(function (v, i) { return pct(v, max[i]); }) };
 }
-
 function distance(a, b) {
   const w = [1.15, 1.1, 1.05, 1.1, 1, 1.15];
   let s = 0, den = 0;
-  for (let i = 0; i < 6; i++) { s += w[i] * Math.pow(a[i] - b[i] * 10, 2); den += w[i]; }
+  for (let i = 0; i < 6; i++) { s += w[i] * Math.pow(a[i] - b[i], 2); den += w[i]; }
   return Math.sqrt(s / den);
 }
-
 function match(sc) {
   const list = people[currentGen];
-  const ranked = list.map(function (p) { return { p: p, dist: distance(sc, p.scores) }; }).sort(function (a, b) { return a.dist - b.dist; });
-  const champs = dims.map(function (d, i) {
-    return list.map(function (p) { return { p: p, delta: Math.abs(sc[i] - p.scores[i] * 10) }; }).sort(function (a, b) { return a.delta - b.delta; })[0].p;
-  });
+  const ranked = list.map(function (p) { return { p: p, dist: distance(sc, personScores(p)) }; })
+    .sort(function (a, b) { return a.dist - b.dist; });
+  const champs = [];
+  for (let i = 0; i < 6; i++) {
+    champs.push(list.map(function (p) { return { p: p, delta: Math.abs(sc[i] - personScores(p)[i]) }; })
+      .sort(function (a, b) { return a.delta - b.delta; })[0].p);
+  }
   return { winner: ranked[0], runner: ranked[1], champs: champs };
 }
-
-function pack(x) { return { name: x.name, desc: x.desc, summary: x.summary, detail: x.detail, aspects: x.aspects || {} }; }
+function pack(x) { return { name: x.name, desc: x.desc, summary: x.summary, detail: x.detail, aspects: x.aspects || {}, scores: x.scores || [] }; }
 
 async function finish() {
   if (answers.some(function (x) { return x === null; })) { alert("还有题目未作答"); show("quiz"); return; }
@@ -345,40 +424,42 @@ async function finish() {
   } catch (e) { alert("保存失败：" + e.message); gotoChoose(); return; }
   showResultView();
 }
-
 function showResultView() {
   if (!serverResults.length) { alert("暂无已测结果"); return; }
   curIdx = serverResults.length - 1;
   renderTabs(); renderCurrent(); show("result");
 }
-
 function renderTabs() {
   $("resultTabs").innerHTML = serverResults.map(function (rec, i) {
-    return '<button class="' + (i === curIdx ? "on" : "") + '" onclick="switchResult(' + i + ')">第 ' + (i + 1) + ' 次 · ' + genLabel(rec.gen) + '</button>';
+    return '<button class="tab ' + (i === curIdx ? "on" : "") + '" onclick="switchResult(' + i + ')">第 ' + (i + 1) + ' 次 · ' + esc(genLabel(rec.gen)) + '</button>';
   }).join("");
 }
-
 function switchResult(i) {
   curIdx = i; renderTabs(); renderCurrent();
   const c = document.querySelector(".result-container"); if (c) c.scrollTop = 0;
 }
-
 function renderCurrent() {
   const rec = serverResults[curIdx];
   if (!rec) return;
   $("resultContent").innerHTML = buildPages(rec, curIdx + 1, true);
-  setTimeout(function () { paintRadar(rec); initScrollButtons(); checkScroll(); }, 150);
+  setTimeout(function () { paintRadar(rec); initScrollButtons(); checkScroll(); }, 160);
 }
-
 async function captureCard(el) {
-  const om = el.style.minHeight, oh = el.style.height;
-  el.style.minHeight = "0"; el.style.height = "auto";
+  const body = el.querySelector(".card-body");
+  const s = { mh: el.style.minHeight, h: el.style.height, an: el.style.animation, bo: "", bf: "", bm: "" };
+  el.style.minHeight = "0"; el.style.height = "auto"; el.style.animation = "none";
+  if (body) {
+    s.bo = body.style.overflow; s.bf = body.style.flex; s.bm = body.style.maxHeight;
+    body.style.overflow = "visible"; body.style.flex = "0 0 auto"; body.style.maxHeight = "none";
+  }
   try {
-    const cv = await html2canvas(el, { scale: 2, backgroundColor: "#151515", useCORS: true, logging: false });
+    const cv = await html2canvas(el, { scale: 2, backgroundColor: "#170f26", useCORS: true, logging: false });
     return cv.toDataURL("image/png");
-  } finally { el.style.minHeight = om; el.style.height = oh; }
+  } finally {
+    el.style.minHeight = s.mh; el.style.height = s.h; el.style.animation = s.an;
+    if (body) { body.style.overflow = s.bo; body.style.flex = s.bf; body.style.maxHeight = s.bm; }
+  }
 }
-
 async function saveAllPosters(btn) {
   const cards = document.querySelectorAll("#resultContent .page-card.saveable");
   if (!cards.length) return;
@@ -390,9 +471,9 @@ async function saveAllPosters(btn) {
     const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     if (mobile) {
       $("modalScroll").innerHTML = imgs.map(function (d, i) {
-        return '<img src="' + d + '"><small style="color:#888;text-align:center;display:block">第 ' + (i + 1) + ' 张 / 共 ' + imgs.length + ' 张</small>';
+        return '<img src="' + d + '" alt="海报' + (i + 1) + '"><small style="color:#8d82a3;text-align:center;display:block;font-size:11px">第 ' + (i + 1) + ' 张 / 共 ' + imgs.length + ' 张</small>';
       }).join("");
-      $("modal").style.display = "flex";
+      $("modal").classList.add("open");
     } else {
       imgs.forEach(function (d, i) {
         const a = document.createElement("a");
@@ -403,26 +484,29 @@ async function saveAllPosters(btn) {
   } catch (e) { alert("生成海报失败，请尝试手动截图"); console.error(e); }
   finally { btn.disabled = false; btn.textContent = old; }
 }
-
-function closeModal() { $("modal").style.display = "none"; }
-function closeCopy() { $("copyModal").style.display = "none"; }
-
+function closeModal() { $("modal").classList.remove("open"); }
+function closeCopy() { $("copyModal").classList.remove("open"); }
 function shareResult() {
   const n = normResult(serverResults[curIdx]);
   const url = location.origin + "/share.html?code=" + encodeURIComponent(code);
-  $("copyArea").value = '我的测试结果是"' + (n.w.desc || n.w.name) + '"。' + (n.w.summary || "") + ' 我的测试结果：' + url;
-  $("copyModal").style.display = "flex";
-  setTimeout(function () { const t = $("copyArea"); t.focus(); t.select(); }, 50);
+  $("copyArea").value = '我的测试结果是「' + (n.w.desc || n.w.name) + '」。' + (n.w.summary || "") + ' 我的测试结果：' + url;
+  $("copyModal").classList.add("open");
+  setTimeout(function () { const t = $("copyArea"); t.focus(); t.select(); }, 60);
 }
-
 $("copyBtn").onclick = function () {
   const t = $("copyArea"); t.focus(); t.select();
   if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(t.value).then(function () { alert("✅ 已复制，粘贴发给朋友即可"); }).catch(function () { alert("请长按文本框手动复制"); });
+    navigator.clipboard.writeText(t.value).then(function () { alert("✅ 已复制，粘贴发给朋友即可"); })
+      .catch(function () { alert("请长按文本框手动复制"); });
   } else { alert("请长按文本框手动复制"); }
 };
-
 function backToTest() { if (remaining > 0) { gotoChoose(); } else { location.reload(); } }
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape") { closeModal(); closeCopy(); }
+  if ($("result").classList.contains("hidden")) return;
+  if (e.key === "ArrowDown") { scrollPage(1); }
+  if (e.key === "ArrowUp") { scrollPage(-1); }
+});
 </script>
 </body>
 </html>

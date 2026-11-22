@@ -4,47 +4,94 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>我的气质原型档案</title>
+<meta property="og:title" content="日本女优气质原型匹配 · 我的测试结果">
+<meta property="og:description" content="30 道代际情境题 · 六维偏好画像，看看你的本命原型是谁">
 <style>
+:root{
+--bg:#0a0710;--surface:#170f26;--surface2:#1e1533;--line:#2c2140;
+--v1:#7c3aed;--v2:#9333ea;--v3:#a855f7;--v4:#c084fc;--v5:#e9d5ff;
+--mag:#db2777;--ind:#6366f1;--warn:#fbbf24;
+--txt:#f4f0fa;--txt2:#b9aecb;--txt3:#8d82a3;
+--sb-track:#150e22;--sb-thumb:#6d34c8;--sb-hover:#a855f7;
+}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:#0a0a0a;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;padding-bottom:90px}
-.wrap{max-width:520px;margin:auto;padding:22px}
-.loading{text-align:center;padding:70px 0;color:#888}
-.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-.tabs button{padding:8px 14px;font-size:12px;background:#171717;color:#d8b4fe;border:1px solid #292929;border-radius:8px;cursor:pointer}
-.tabs button.on{background:#2e1065;border-color:#c084fc;color:#fff}
-.page-card{background:#151515;border:1px solid #2a2a2a;border-radius:20px;padding:30px 24px 40px;margin-bottom:20px;position:relative;display:flex;flex-direction:column;overflow:hidden}
-.page-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#9333ea,#c084fc)}
-.test-index-tag{position:absolute;top:15px;right:15px;background:rgba(147,51,234,.18);color:#d8b4fe;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:bold}
-.a-page-title{font-size:12px;color:#c084fc;letter-spacing:2px;text-align:center;margin:10px 0 15px}
-.a-page-name{font-size:28px;font-weight:800;text-align:center;margin:0 0 8px;background:linear-gradient(135deg,#fff,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.a-page-desc{font-size:16px;font-weight:bold;text-align:center;color:#fff;margin:0 0 15px}
-.radar-box{background:#0f0f0f;border-radius:12px;padding:10px 20px 20px;margin:10px 0;text-align:center;border:1px solid #222}
-.radar-box h4{margin:0 0 10px;color:#d8b4fe;font-size:15px}
-canvas{max-width:100%;height:auto;display:block;margin:0 auto}
-.a-page-summary{font-size:14px;color:#ccc;line-height:1.6;text-align:center;background:rgba(147,51,234,.06);padding:16px;border-radius:8px;border-left:3px solid #9333ea;margin-top:10px}
-.b-page-desc-large{font-size:24px;font-weight:900;text-align:center;margin:0 0 20px;line-height:1.3;background:linear-gradient(135deg,#fff,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.c-page-desc-medium{font-size:20px;font-weight:900;text-align:center;margin:0 0 20px;line-height:1.3;background:linear-gradient(135deg,#fff,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.b-page-dimensions-list{display:flex;flex-direction:column;gap:20px}
-.b-dim-section{background:rgba(255,255,255,.03);border-radius:12px;padding:16px;border-left:3px solid #9333ea}
-.b-dim-title{font-size:18px;font-weight:700;color:#fff;margin-bottom:8px}
-.b-dim-text{font-size:14px;color:#ccc;line-height:1.6}
-.b-page-name-small{font-size:13px;text-align:center;color:#555;margin-top:25px;letter-spacing:2px}
-.c-page-title{font-size:18px;font-weight:bold;color:#c084fc;text-align:center;margin:0 0 25px}
-.dim-block{margin-bottom:24px;border-bottom:1px solid #222;padding-bottom:20px}
-.dim-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
-.dim-header-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
-.dim-name-score{font-size:15px;font-weight:bold;color:#fff}
-.dim-champion{font-size:14px;font-weight:bold;color:#c084fc}
-.bar-container{width:100%;height:10px;border:1px solid #9333ea;border-radius:5px;margin:10px 0;overflow:hidden}
-.bar-fill{height:100%;background:#9333ea;border-radius:5px}
-.dim-desc-text{font-size:12px;color:#888;line-height:1.5;margin-top:8px}
-.note{font-size:11px;color:#777;margin-top:10px}
-.cta{position:fixed;left:0;right:0;bottom:0;padding:14px 22px;background:rgba(10,10,10,.96);border-top:1px solid #262626;text-align:center}
-.cta a{display:block;max-width:480px;margin:0 auto;padding:15px;border-radius:12px;background:linear-gradient(135deg,#9333ea,#c084fc);color:#fff;font-weight:700;text-decoration:none}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;padding-bottom:92px}
+body::-webkit-scrollbar{width:10px}
+body::-webkit-scrollbar-track{background:var(--sb-track)}
+body::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--v1),var(--mag));border-radius:99px;border:2px solid var(--sb-track)}
+body::-webkit-scrollbar-thumb:hover{background:var(--sb-hover)}
+body{scrollbar-width:thin;scrollbar-color:var(--sb-thumb) var(--sb-track)}
+.aurora{position:fixed;inset:-25%;z-index:0;pointer-events:none;filter:blur(80px);opacity:.5}
+.aurora i{position:absolute;display:block;border-radius:50%;mix-blend-mode:screen;animation:drift 28s ease-in-out infinite}
+.aurora i:nth-child(1){width:52vw;height:52vw;left:2%;top:2%;background:radial-gradient(circle,#7c3aed,transparent 68%)}
+.aurora i:nth-child(2){width:46vw;height:46vw;right:0;top:34%;background:radial-gradient(circle,#db2777,transparent 68%);animation-delay:-10s}
+.aurora i:nth-child(3){width:44vw;height:44vw;left:16%;bottom:0;background:radial-gradient(circle,#4f46e5,transparent 68%);animation-delay:-18s}
+@keyframes drift{0%,100%{transform:translate3d(0,0,0) scale(1)}33%{transform:translate3d(5%,-6%,0) scale(1.12)}66%{transform:translate3d(-5%,5%,0) scale(.94)}}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.045;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{position:relative;z-index:2;max-width:520px;margin:auto;padding:20px}
+.loading{text-align:center;padding:80px 0;color:var(--txt3);font-size:14px}
+.head{text-align:center;margin-bottom:14px}
+.badge-top{display:inline-block;font-size:11px;letter-spacing:3px;color:var(--v4);border:1px solid var(--line);background:rgba(124,58,237,.12);padding:5px 12px;border-radius:99px}
+.tabs{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin-bottom:14px;position:sticky;top:0;z-index:20;padding:8px 0;background:linear-gradient(180deg,rgba(10,7,16,.96),rgba(10,7,16,.72) 70%,transparent);backdrop-filter:blur(6px)}
+.tab{padding:8px 14px;font-size:12px;background:var(--surface);color:var(--txt2);border:1px solid var(--line);border-radius:99px;cursor:pointer;font:inherit;transition:.2s}
+.tab:hover{border-color:var(--v3);color:var(--txt)}
+.tab.on{background:linear-gradient(115deg,var(--v1),var(--mag));color:#fff;border-color:transparent;box-shadow:0 6px 18px -8px rgba(219,39,119,.9)}
+.page-card{background:linear-gradient(168deg,var(--surface),#120b1e);border:1px solid var(--line);border-radius:22px;padding:28px 22px;margin-bottom:20px;position:relative;display:flex;flex-direction:column;overflow:hidden;animation:cardIn .5s both}
+.page-card:nth-child(2){animation-delay:.06s}.page-card:nth-child(3){animation-delay:.12s}
+.page-card:nth-child(4){animation-delay:.18s}.page-card:nth-child(5){animation-delay:.24s}
+@keyframes cardIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.page-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--ind),var(--v2) 40%,var(--mag) 75%,var(--warn))}
+.card-body{display:flex;flex-direction:column}
+.test-index-tag{position:absolute;top:14px;right:14px;background:rgba(124,58,237,.24);color:var(--v5);padding:4px 10px;border-radius:99px;font-size:10px;font-weight:700;border:1px solid var(--line);z-index:3}
+.a-page-title{font-size:11px;color:var(--v4);letter-spacing:2px;text-align:center;margin:6px 0 14px}
+.a-page-name{font-size:30px;font-weight:900;text-align:center;margin:0 0 8px;line-height:1.2;background:linear-gradient(115deg,#fff,var(--v5) 40%,#f472b6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.a-page-desc{font-size:15px;font-weight:800;text-align:center;color:var(--v4);margin:0 0 14px}
+.radar-box{background:radial-gradient(circle at 50% 40%,#150d24,#0d0716);border-radius:16px;padding:12px 14px 14px;margin:0 0 14px;text-align:center;border:1px solid var(--line)}
+.radar-box h4{margin:0 0 6px;color:var(--v5);font-size:14px}
+canvas{display:block;margin:0 auto;max-width:100%;height:auto}
+.radar-legend{display:flex;flex-wrap:wrap;gap:6px 10px;justify-content:center;margin-top:8px}
+.lg{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;color:var(--txt2)}
+.lg i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.lg b{color:var(--txt);font-size:11px}
+.a-page-summary{font-size:13px;color:var(--txt2);line-height:1.85;background:rgba(124,58,237,.09);padding:15px 16px;border-radius:12px;border-left:3px solid var(--v2)}
+.b-page-desc-large{font-size:23px;font-weight:900;text-align:center;margin:2px 0 18px;line-height:1.35;background:linear-gradient(115deg,#fff,var(--v4) 55%,#f472b6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.c-page-desc-medium{font-size:19px;font-weight:900;text-align:center;margin:2px 0 18px;line-height:1.35;background:linear-gradient(115deg,#fff,var(--v4) 55%,#f472b6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.b-page-dimensions-list,.dim-scroll{display:flex;flex-direction:column;gap:16px}
+.b-dim-section{background:rgba(255,255,255,.035);border-radius:14px;padding:15px;border-left:3px solid var(--hue)}
+.b-dim-title{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:800;color:var(--txt);margin-bottom:9px}
+.dim-ico{font-size:17px}
+.dim-chip{margin-left:auto;font-size:11px;font-weight:800;color:#0a0710;background:var(--hue);border-radius:99px;padding:2px 9px}
+.aspect-badge{display:inline-block;font-size:12px;font-weight:800;color:var(--hue);border:1px solid var(--hue);background:color-mix(in srgb,var(--hue) 14%,transparent);border-radius:99px;padding:3px 11px;margin-bottom:9px}
+.b-dim-text{font-size:13px;color:var(--txt2);line-height:1.85}
+.dim-meta{font-size:11px;color:var(--txt3);line-height:1.7;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.dim-formula{font-size:11px;color:var(--txt3);margin-top:6px;font-variant-numeric:tabular-nums}
+.dim-formula b{color:var(--hue)}
+.b-page-name-small{font-size:11px;text-align:center;color:var(--txt3);margin-top:16px;letter-spacing:2px}
+.c-page-title{font-size:17px;font-weight:800;color:var(--v4);text-align:center;margin:2px 0 18px}
+.dim-block{border-bottom:1px solid var(--line);padding-bottom:16px}
+.dim-block:last-child{border-bottom:none;padding-bottom:0}
+.dim-header-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:8px}
+.dim-name-score{font-size:14px;font-weight:800;color:var(--txt)}
+.dim-name-score em{font-style:normal;color:var(--hue);margin-left:6px;font-size:12px}
+.dim-champion{font-size:13px;font-weight:800;color:var(--hue);text-align:right}
+.bar-container{width:100%;height:9px;border:1px solid var(--line);background:#150e22;border-radius:99px;margin:8px 0 10px;overflow:hidden}
+.bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,color-mix(in srgb,var(--hue) 55%,#7c3aed),var(--hue))}
+.dim-desc-text{font-size:12.5px;color:var(--txt2);line-height:1.85}
+.note{font-size:11px;color:var(--txt3);line-height:1.7;margin-top:14px}
+.note b{color:var(--v4)}
+.cta{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:14px 20px;background:linear-gradient(180deg,rgba(10,7,16,.6),rgba(10,7,16,.98));border-top:1px solid var(--line);text-align:center;backdrop-filter:blur(8px)}
+.cta a{display:block;max-width:480px;margin:0 auto;padding:15px;border-radius:13px;background:linear-gradient(115deg,var(--v1),var(--v2) 45%,var(--mag));color:#fff;font-weight:800;text-decoration:none;box-shadow:0 8px 24px -10px rgba(219,39,119,.9);transition:transform .18s}
+.cta a:hover{transform:translateY(-2px)}
+@media (max-width:400px){.a-page-name{font-size:26px}.b-page-desc-large{font-size:20px}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
+<div class="aurora"><i></i><i></i><i></i></div>
+<div class="grain"></div>
+
 <div class="wrap">
+  <div class="head"><span class="badge-top">SHARED ARCHETYPE REPORT</span></div>
   <div class="tabs" id="tabs"></div>
   <div id="posters"><div class="loading">正在加载测试结果...</div></div>
 </div>
@@ -53,22 +100,20 @@ canvas{max-width:100%;height:auto;display:block;margin:0 auto}
 <script src="data.js"></script>
 <script src="render.js"></script>
 <script>
+const $ = function (id) { return document.getElementById(id); };
 let results = [], curIdx = 0;
-const $ = id => document.getElementById(id);
 
 function renderTabs() {
   $("tabs").innerHTML = results.map(function (rec, i) {
-    return '<button class="' + (i === curIdx ? "on" : "") + '" onclick="switchTo(' + i + ')">第 ' + (i + 1) + ' 次 · ' + genLabel(rec.gen) + '</button>';
+    return '<button class="tab ' + (i === curIdx ? "on" : "") + '" onclick="switchTo(' + i + ')">第 ' + (i + 1) + ' 次 · ' + esc(genLabel(rec.gen)) + '</button>';
   }).join("");
 }
-
 function paint() {
   const rec = results[curIdx];
   $("posters").innerHTML = buildPages(rec, curIdx + 1, false);
-  setTimeout(function () { paintRadar(rec); }, 120);
+  setTimeout(function () { paintRadar(rec); }, 140);
 }
-
-function switchTo(i) { curIdx = i; renderTabs(); paint(); window.scrollTo(0, 0); }
+function switchTo(i) { curIdx = i; renderTabs(); paint(); window.scrollTo({ top: 0, behavior: "smooth" }); }
 
 async function load() {
   const c = new URLSearchParams(location.search).get("code");
@@ -84,7 +129,6 @@ async function load() {
     $("posters").innerHTML = '<div class="loading">加载失败，请稍后重试。</div>';
   }
 }
-
 load();
 </script>
 </body>
