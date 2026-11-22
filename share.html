@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>我的气质原型档案</title>
+<meta property="og:title" content="日本女优气质原型匹配 · 我的测试结果">
+<meta property="og:description" content="30道代际情境题 · 六维偏好画像，看看你的本命原型是谁">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:#0a0a0a;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;padding-bottom:90px}
+.wrap{max-width:520px;margin:auto;padding:22px}
+.loading{text-align:center;padding:70px 0;color:#888}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:15px}
+.tabs button{width:auto;padding:8px 14px;font-size:12px;background:#171717;color:#d8b4fe;border:1px solid #292929;border-radius:8px;cursor:pointer}
+.tabs button.on{background:#2e1065;border-color:#c084fc;color:#fff}
+.poster{background:#151515;border:1px solid #333;border-radius:18px;padding:24px;margin:18px 0;box-shadow:0 10px 40px rgba(147,51,234,.08)}
+.kicker{text-align:center;color:#d8b4fe;letter-spacing:2px;font-size:12px}
+.winner{text-align:center;font-size:29px;font-weight:900;margin:18px 0;background:linear-gradient(135deg,#e9d5ff,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.score{height:9px;background:#292929;border-radius:8px;overflow:hidden;margin:8px 0}
+.score i{display:block;height:100%;background:linear-gradient(90deg,#9333ea,#c084fc)}
+.dim{padding:12px 0;border-bottom:1px solid #292929}
+.dim small{color:#999}
+.dim:last-child{border-bottom:none}
+p{color:#999;line-height:1.65}
+.note{font-size:11px;color:#777;margin-top:10px}
+.cta{position:fixed;left:0;right:0;bottom:0;padding:14px 22px;background:rgba(10,10,10,.96);border-top:1px solid #262626;text-align:center}
+.cta a{display:block;max-width:480px;margin:0 auto;padding:15px;border-radius:12px;background:linear-gradient(135deg,#9333ea,#c084fc);color:#fff;font-weight:700;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="tabs" id="tabs"></div>
+  <div id="posters"><div class="loading">正在加载测试结果...</div></div>
+</div>
+<div class="cta"><a href="index.html">✨ 我也要测试 ✨</a></div>
+
+<script>
+const dims = [
+  {name:"颜值",desc:"五官风格、面部记忆点与整体上镜氛围"},
+  {name:"身材",desc:"身形轮廓、比例观感与造型呈现"},
+  {name:"演技",desc:"情绪表达、角色投入与镜头叙事感"},
+  {name:"崩坏反差",desc:"反差张力、意外感与不按套路的表现力"},
+  {name:"公众形象",desc:"辨识度、职业形象与公众认知标签"},
+  {name:"陪伴感",desc:"亲近感、松弛度与长期相处的舒适感"}
+];
+const genNames = ["一代","二代","三代","四代","五代"];
+let results = [], curIdx = 0;
+const $ = id => document.getElementById(id);
+
+function genLabel(g){
+  const i = Number(String(g).replace("gen","")) - 1;
+  return genNames[i] || String(g);
+}
+
+function normResult(r){
+  r = r || {};
+  const w = (r.winner && typeof r.winner === "object") ? r.winner : { name:String(r.winner||"未知原型"), desc:"", summary:"", detail:"" };
+  const sc = Array.isArray(r.scores) ? r.scores : [0,0,0,0,0,0];
+  const ch = Array.isArray(r.champions) ? r.champions.map(function(c){
+    return (c && typeof c === "object") ? c : { name:String(c||"—"), desc:"", summary:"", detail:"" };
+  }) : [];
+  const rn = (r.runner && typeof r.runner === "object") ? r.runner : { name: r.runner ? String(r.runner) : "—", gap:null };
+  return { w:w, sc:sc, ch:ch, rn:rn };
+}
+
+function buildPosters(r, label, times){
+  const n = normResult(r), w = n.w, sc = n.sc, ch = n.ch, rn = n.rn;
+  const maxIdx = sc.indexOf(Math.max.apply(null, sc));
+  let h = "";
+  h += '<article class="poster">';
+  h += '<div class="kicker">YOUR ARCHETYPE · ' + label + ' · 第 ' + times + ' 次</div>';
+  h += '<div class="winner">' + w.name + '</div>';
+  if (w.desc) h += '<p style="text-align:center;color:#d8b4fe;font-weight:bold;margin:0 0 12px">' + w.desc + '</p>';
+  if (w.summary) h += '<p style="text-align:center;color:#ccc;">' + w.summary + '</p>';
+  h += '<h3 style="margin-top:25px;color:#d8b4fe;">六维偏好画像</h3>';
+  for (let i = 0; i < 6; i++) {
+    h += '<div class="dim"><b>' + dims[i].name + '</b>'
+      + '<span style="float:right;color:#c084fc;font-weight:bold;">' + sc[i] + '分</span>'
+      + '<div class="score"><i style="width:' + sc[i] + '%"></i></div>'
+      + '<small>' + dims[i].desc + '</small></div>';
+  }
+  h += '<p class="note">第二接近原型：<strong>' + rn.name + '</strong>' + ((rn.gap !== null && rn.gap !== undefined) ? '。两者距离差：' + rn.gap : '') + '。</p>';
+  h += '<p class="note">匹配结果仅供娱乐参考，不是科学测评。</p>';
+  h += '</article>';
+
+  h += '<article class="poster"><div class="kicker">DIMENSION CHAMPIONS</div><div class="winner">六维专属原型榜</div>';
+  for (let j = 0; j < 6; j++) {
+    const c = ch[j] || { name:"—", desc:"", summary:"", detail:"" };
+    h += '<div class="dim"><b>' + dims[j].name + '</b>'
+      + '<div class="winner" style="font-size:22px;text-align:left;margin:10px 0;">' + c.name + '</div>'
+      + '<small style="color:#d8b4fe">' + (c.desc || dims[j].desc) + '</small>'
+      + ((c.detail || c.summary) ? '<p style="margin-top:8px;color:#ccc;">' + (c.detail || c.summary) + '</p>' : '')
+      + '</div>';
+  }
+  h += '</article>';
+
+  h += '<article class="poster"><div class="kicker">YOUR PROFILE</div><div class="winner">魅力画像</div>';
+  h += '<p style="color:#ccc;line-height:1.7;">' + (w.detail || w.summary || "暂无详细画像") + '</p>';
+  h += '<p style="margin-top:15px;color:#ccc;">突出维度是<strong style="color:#c084fc;">' + dims[maxIdx].name + '</strong>。</p>';
+  h += '<p class="note">娱乐性自我探索内容，不用于判断他人或作现实决策。</p>';
+  h += '</article>';
+  return h;
+}
+
+function renderTabs(){
+  $("tabs").innerHTML = results.map(function(rec,i){
+    return '<button class="' + (i===curIdx?"on":"") + '" onclick="switchTo(' + i + ')">第 ' + (i+1) + ' 次 · ' + genLabel(rec.gen) + '</button>';
+  }).join("");
+}
+
+function switchTo(i){
+  curIdx = i;
+  renderTabs();
+  $("posters").innerHTML = buildPosters(results[curIdx].result, genLabel(results[curIdx].gen), curIdx+1);
+  window.scrollTo(0,0);
+}
+
+async function load(){
+  const c = new URLSearchParams(location.search).get("code");
+  if (!c) { $("posters").innerHTML = '<div class="loading">链接无效，请让朋友重新分享。</div>'; return; }
+  try {
+    const r = await fetch("/api/check", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ code:c.toUpperCase() }) });
+    const d = await r.json();
+    if (!r.ok || !Array.isArray(d.results) || !d.results.length) {
+      $("posters").innerHTML = '<div class="loading">未找到测试结果。</div>';
+      return;
+    }
+    results = d.results;
+    curIdx = results.length - 1;
+    renderTabs();
+    $("posters").innerHTML = buildPosters(results[curIdx].result, genLabel(results[curIdx].gen), curIdx+1);
+  } catch (e) {
+    $("posters").innerHTML = '<div class="loading">加载失败，请稍后重试。</div>';
+  }
+}
+
+load();
+</script>
+</body>
+</html>
