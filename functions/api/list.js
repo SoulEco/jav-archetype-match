@@ -1,19 +1,38 @@
-const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"}});
-const codeKey=code=>"CODE_"+String(code||"").trim().toUpperCase();
-const validCode=code=>/^[A-Z0-9]{6}$/.test(String(code||"").trim().toUpperCase());
-const adminOK=(password,env)=>!!env.ADMIN_PASSWORD && password===env.ADMIN_PASSWORD;
+// functions/api/list.js
+export async function onRequestPost(context) {
+  const { request, env } = context;
+  const { password } = await request.json();
 
-export async function onRequestPost({request,env}) {
-  try{
-    const {password}=await request.json();
-    if(!adminOK(password,env)) return json({error:"管理员密码错误"},401);
-    let cursor,results=[];
-    do{
-      const page=await env.MY_KV.list({prefix:"CODE_",limit:1000,cursor});
-      for(const k of page.keys){const d=await env.MY_KV.get(k.name,{type:"json"});if(d){const max=Number(d.max_attempts)||0,used=Number(d.used_attempts)||0;results.push({code:k.name.slice(5),max,used,remaining:Math.max(0,max-used),created:d.created_at||"未知"})}}
-      cursor=page.cursor;
-    }while(cursor);
-    results.sort((a,b)=>String(b.created).localeCompare(String(a.created)));
-    return json({success:true,list:results});
-  }catch(e){return json({error:"读取数据库失败："+e.message},500)}
+  // 验证密码 (和 generate.js 保持一致)
+  if (password !== 'soul2026') {
+    return new Response(JSON.stringify({ error: '密码错误' }), { status: 401, headers: { 'Content-Type': 'application/json' } });
+  }
+
+  try {
+    // 列出所有以 CODE_ 开头的键
+    const list = await env.MY_KV.list({ prefix: 'CODE_', limit: 100 });
+    const results = [];
+
+    // 遍历获取每个码的详细信息
+    for (const key of list.keys) {
+      const data = await env.MY_KV.get(key.name, { type: 'json' });
+      if (data) {
+        const code = key.name.replace('CODE_', '');
+        results.push({
+          code: code,
+          max: data.max_attempts,
+          used: data.used_attempts,
+          remaining: data.max_attempts - data.used_attempts,
+          created: data.created_at ? new Date(data.created_at).toLocaleString('zh-CN') : '未知'
+        });
+      }
+    }
+
+    // 按创建时间倒序排列（最新的在前面）
+    results.sort((a, b) => new Date(b.created) - new Date(a.created));
+
+    return new Response(JSON.stringify({ success: true, list: results }), { headers: { 'Content-Type': 'application/json' } });
+  } catch (e) {
+    return new Response(JSON.stringify({ error: '读取数据库失败: ' + e.message }), { status: 500 });
+  }
 }
