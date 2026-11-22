@@ -55,7 +55,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 #msg{min-height:20px;margin-top:10px;font-size:13px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:4px 0 6px}
 .gen-card{background:linear-gradient(160deg,var(--surface),#130c20);border:1px solid var(--line);border-radius:16px;padding:16px 14px;text-align:center;cursor:pointer;transition:.22s;position:relative;overflow:hidden}
-.gen-card::after{content:"";position:absolute;inset:0;background:linear-gradient(140deg,rgba(168,85,247,.16),transparent 60%);opacity:0;transition:.25s}
+.gen-card::after{content:"";position:absolute;inset:0;background:linear-gradient(140deg,rgba(168,85,247,.16),transparent 60%);opacity:0;transition:.25s;pointer-events:none;}
 .gen-card:hover{border-color:var(--v3);transform:translateY(-3px)}
 .gen-card:hover::after{opacity:1}
 .gen-card b{display:block;color:var(--v5);font-size:15px;margin-bottom:6px;position:relative}
