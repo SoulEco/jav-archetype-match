@@ -1,81 +1,89 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>日本女优气质原型匹配系统</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<style>
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-body { margin: 0; background: #0a0a0a; color: #fff; font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; }
-.wrap { max-width: 520px; margin: auto; padding: 22px; min-height: 100vh; }
-.hidden { display: none !important; }
-
-h1 { font-size: 26px; line-height: 1.3; background: linear-gradient(135deg, #9333ea, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-p { color: #999; line-height: 1.65; }
-.hero { text-align: center; padding: 34px 0; }
-
-input, button { width: 100%; padding: 14px; border-radius: 11px; border: 1px solid #333; background: #171717; color: #fff; font-size: 15px; margin: 7px 0; transition: all 0.2s ease; }
-button { background: linear-gradient(135deg, #9333ea, #c084fc); border: 0; font-weight: 700; cursor: pointer; }
-button:hover { opacity: 0.9; transform: translateY(-1px); }
-button:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-
-.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.card, .option, .panel { background: #151515; border: 1px solid #292929; border-radius: 12px; padding: 15px; transition: all 0.2s ease; }
-.card { text-align: center; cursor: pointer; }
-.card:hover { border-color: #c084fc; background: #1a1025; }
-.card b { color: #d8b4fe; }
-.muted { color: #888; font-size: 12px; }
-
-.progress { height: 5px; background: #292929; border-radius: 5px; margin: 18px 0; }
-.fill { height: 100%; background: linear-gradient(90deg, #9333ea, #c084fc); width: 0; transition: width 0.3s ease; }
-
-.option { display: block; width: 100%; text-align: left; line-height: 1.5; margin: 10px 0; cursor: pointer; }
-.option:hover { border-color: #c084fc; }
-.option.sel { border-color: #c084fc; background: #2e1065; }
-
-.row { display: flex; gap: 10px; }
-.row button { flex: 1; }
-
-.poster { 
-  background: #151515; 
-  border: 1px solid #333; 
-  border-radius: 18px; 
-  padding: 24px; 
-  margin: 18px 0; 
-  min-height: 80vh; 
-  box-shadow: 0 10px 40px rgba(147, 51, 234, 0.08); 
-}
-.kicker { text-align: center; color: #d8b4fe; letter-spacing: 2px; font-size: 12px; }
-.winner { 
-  text-align: center; 
-  font-size: 29px; 
-  font-weight: 900; 
-  margin: 18px 0; 
-  background: linear-gradient(135deg, #e9d5ff, #c084fc); 
-  -webkit-background-clip: text; 
-  -webkit-text-fill-color: transparent; 
-}
-
-.score { height: 9px; background: #292929; border-radius: 8px; overflow: hidden; margin: 8px 0; }
-.score i { display: block; height: 100%; background: linear-gradient(90deg, #9333ea, #c084fc); transition: width 0.5s ease; }
-
-.dim { padding: 12px 0; border-bottom: 1px solid #292929; }
-.dim small { color: #999; }
-
-.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 15px; }
-.tabs button { width: auto; padding: 8px 14px; font-size: 12px; background: #171717; color: #d8b4fe; margin: 0; border: 1px solid #292929; border-radius: 8px; cursor: pointer; }
-.tabs button:hover { background: #2e1065; border-color: #c084fc; }
-
-a { color: #d8b4fe; text-decoration: none; transition: color 0.2s; }
-a:hover { color: #fff; text-decoration: underline; }
-.note { font-size: 11px; color: #777; margin-top: 10px; }
-.ghost{background:#1a1a1a !important;border:1px solid #333 !important;color:#d8b4fe !important}
-.ghost:hover{background:#2e1065 !important;border-color:#c084fc !important}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:#0a0a0a;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;height:100vh;overflow:hidden}
+.wrap{max-width:520px;margin:0 auto;padding:22px;height:100vh;display:flex;flex-direction:column}
+.hidden{display:none!important}
+.wrap>section:not(#result):not(.hidden){flex:1 1 auto;min-height:0;overflow-y:auto}
+h1{font-size:26px;line-height:1.3;background:linear-gradient(135deg,#9333ea,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+p{color:#999;line-height:1.65}
+.hero{text-align:center;padding:34px 0}
+input,button{width:100%;padding:14px;border-radius:11px;border:1px solid #333;background:#171717;color:#fff;font-size:15px;margin:7px 0;transition:all .2s ease}
+button{background:linear-gradient(135deg,#9333ea,#c084fc);border:0;font-weight:700;cursor:pointer}
+button:hover{opacity:.9;transform:translateY(-1px)}
+button:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.ghost{background:#1a1a1a!important;border:1px solid #333!important;color:#d8b4fe!important}
+.ghost:hover{background:#2e1065!important;border-color:#c084fc!important}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{background:#151515;border:1px solid #292929;border-radius:12px;padding:15px;text-align:center;cursor:pointer;transition:all .2s ease}
+.card:hover{border-color:#c084fc;background:#1a1025}
+.card b{color:#d8b4fe}
+.muted{color:#888;font-size:12px}
+.note{font-size:11px;color:#777;margin-top:10px}
+a{color:#d8b4fe;text-decoration:none}
+a:hover{color:#fff;text-decoration:underline}
+.progress{height:5px;background:#292929;border-radius:5px;margin:18px 0}
+.fill{height:100%;background:linear-gradient(90deg,#9333ea,#c084fc);width:0;transition:width .3s ease}
+.option{display:block;width:100%;text-align:left;line-height:1.5;margin:10px 0;cursor:pointer;background:#151515;border:1px solid #292929;border-radius:12px;padding:15px;color:#fff;font-size:14px;font-weight:400}
+.option:hover{border-color:#c084fc}
+.option.sel{border-color:#c084fc;background:#2e1065}
+.row{display:flex;gap:10px}
+.row button{flex:1}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tabs button{width:auto;padding:8px 14px;font-size:12px;background:#171717;color:#d8b4fe;margin:0;border:1px solid #292929;border-radius:8px;font-weight:400}
 .tabs button.on{background:#2e1065;border-color:#c084fc;color:#fff}
-.actions{display:flex;flex-direction:column;gap:10px;margin-top:22px}
-.moreBtn{display:block;text-align:center;padding:14px;border-radius:11px;background:linear-gradient(135deg,#7c3aed,#db2777);color:#fff;font-weight:700;text-decoration:none}
-.moreBtn:hover{opacity:.9}
+
+#result{flex:1 1 auto;min-height:0;flex-direction:column;overflow:hidden}
+#result:not(.hidden){display:flex}
+#result>.tabs{flex:0 0 auto}
+.result-container{flex:1 1 0;height:0;min-height:0;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior-y:contain;scrollbar-width:none;-ms-overflow-style:none;position:relative}
+.result-container::-webkit-scrollbar{display:none}
+
+.page-card{min-height:100%;scroll-snap-align:start;background:#151515;border:1px solid #2a2a2a;border-radius:20px;padding:30px 24px 60px;margin-bottom:20px;position:relative;display:flex;flex-direction:column;overflow:hidden}
+.page-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#9333ea,#c084fc);border-radius:20px 20px 0 0}
+.test-index-tag{position:absolute;top:15px;right:15px;background:rgba(147,51,234,.18);color:#d8b4fe;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:bold}
+.a-page-title{font-size:12px;color:#c084fc;letter-spacing:2px;text-align:center;margin:10px 0 15px}
+.a-page-name{font-size:28px;font-weight:800;text-align:center;margin:0 0 8px;background:linear-gradient(135deg,#fff,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.a-page-desc{font-size:16px;font-weight:bold;text-align:center;color:#fff;margin:0 0 15px}
+.radar-box{background:#0f0f0f;border-radius:12px;padding:10px 20px 20px;margin:10px 0;text-align:center;flex-shrink:0;border:1px solid #222}
+.radar-box h4{margin:0 0 10px;color:#d8b4fe;font-size:15px}
+canvas{max-width:100%;height:auto;display:block;margin:0 auto}
+.a-page-summary{font-size:14px;color:#ccc;line-height:1.6;text-align:center;background:rgba(147,51,234,.06);padding:16px;border-radius:8px;border-left:3px solid #9333ea;margin-top:10px}
+.b-page-desc-large{font-size:24px;font-weight:900;text-align:center;margin:0 0 20px;line-height:1.3;letter-spacing:1px;background:linear-gradient(135deg,#fff,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.c-page-desc-medium{font-size:20px;font-weight:900;text-align:center;margin:0 0 20px;line-height:1.3;letter-spacing:1px;background:linear-gradient(135deg,#fff,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.b-page-dimensions-list{display:flex;flex-direction:column;gap:20px;flex:1;overflow-y:auto;padding-right:5px}
+.b-dim-section{background:rgba(255,255,255,.03);border-radius:12px;padding:16px;border-left:3px solid #9333ea}
+.b-dim-title{font-size:18px;font-weight:700;color:#fff;margin-bottom:8px}
+.b-dim-text{font-size:14px;color:#ccc;line-height:1.6}
+.b-page-name-small{font-size:13px;text-align:center;color:#555;margin-top:25px;letter-spacing:2px}
+.c-page-title{font-size:18px;font-weight:bold;color:#c084fc;text-align:center;margin:0 0 25px}
+.dim-block{margin-bottom:24px;border-bottom:1px solid #222;padding-bottom:20px}
+.dim-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.dim-header-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.dim-name-score{font-size:15px;font-weight:bold;color:#fff}
+.dim-champion{font-size:14px;font-weight:bold;color:#c084fc}
+.bar-container{width:100%;height:10px;border:1px solid #9333ea;border-radius:5px;margin:10px 0;overflow:hidden}
+.bar-fill{height:100%;background:#9333ea;border-radius:5px}
+.dim-desc-text{font-size:12px;color:#888;line-height:1.5;margin-top:8px}
+
+.page-f{justify-content:center;align-items:center;padding:20px 24px}
+.page-f .test-index-tag{display:none}
+.f-actions{width:100%;max-width:320px;display:flex;flex-direction:column;gap:12px}
+.btn-save-poster,.btn-share-link,.btn-retest{display:block;width:100%;padding:14px;margin:0;border-radius:10px;font-size:15px;font-weight:bold;cursor:pointer}
+.btn-save-poster{background:linear-gradient(135deg,#9333ea,#c084fc);color:#fff;border:0}
+.btn-share-link{background:#241436;color:#d8b4fe;border:1px solid #9333ea}
+.btn-retest{background:#1a1a1a;color:#fff;border:1px solid #333}
+.btn-more{display:block;width:100%;padding:14px;border-radius:10px;background:linear-gradient(135deg,#7c3aed,#db2777);color:#fff;font-size:15px;font-weight:bold;text-align:center;text-decoration:none}
+.btn-more:hover{opacity:.9;text-decoration:none}
+.f-tip{color:#666;font-size:12px;line-height:1.6;text-align:center;margin:8px 0 0}
+
+#scrollNav{position:fixed;right:15px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:15px;z-index:999}
+.scroll-btn{width:44px;height:44px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s ease;opacity:0;pointer-events:none;transform:scale(.8)}
+.scroll-btn.visible{opacity:1;pointer-events:auto;transform:scale(1)}
+.scroll-btn:hover{background:rgba(147,51,234,.35);border-color:#c084fc}
+.scroll-btn svg{width:24px;height:24px;fill:#fff}
+
 #modal,#copyModal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);z-index:9999;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px}
 #modalScroll{width:92%;max-width:420px;max-height:70vh;overflow-y:auto;display:flex;flex-direction:column;gap:14px}
 #modalScroll img{width:100%;border-radius:12px}
@@ -162,6 +170,79 @@ a:hover { color: #fff; text-decoration: underline; }
 </div>
 </main>
 
+<div id="scrollNav" class="hidden">
+  <div class="scroll-btn scroll-up" onclick="scrollPage(-1)"><svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg></div>
+  <div class="scroll-btn scroll-down" onclick="scrollPage(1)"><svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg></div>
+</div>
+
+<main class="wrap">
+  <section id="entry">
+    <div class="hero">
+      <h1>✨ 日本女优气质原型匹配</h1>
+      <p>30道代际专属情境题 · 六维偏好画像 · 综合原型与维度冠军</p>
+      <input id="code" maxlength="6" placeholder="输入6位授权码" autocomplete="off">
+      <button id="start">验证授权码</button>
+      <div id="msg" class="muted" style="min-height:18px;margin-top:10px;"></div>
+    </div>
+  </section>
+
+  <section id="choose" class="hidden">
+    <h1>选择测试代际</h1>
+    <p id="remain" style="color:#c084fc;font-weight:bold;"></p>
+    <div class="grid" id="genCards"></div>
+    <button id="viewResultBtn" class="ghost hidden">📂 查看已测代际结果</button>
+    <p class="note">按女优首次正式出道的大致年份划分。候选人均为成年公众人物；人物原型是娱乐性风格类比，不代表真人性格或私生活。</p>
+  </section>
+
+  <section id="quiz" class="hidden">
+    <div class="muted">第 <span id="num">1</span> / 30 题</div>
+    <div class="progress"><div id="fill" class="fill"></div></div>
+    <h2 id="question" style="font-size:18px;line-height:1.5;margin-bottom:20px;"></h2>
+    <div id="options"></div>
+    <div class="row">
+      <button id="prev" class="ghost">← 上一题</button>
+      <button id="next">下一题 →</button>
+    </div>
+  </section>
+
+  <section id="confirm" class="hidden">
+    <div class="hero">
+      <div style="font-size:56px;margin-bottom:10px;">🎯</div>
+      <h1>你已完成全部 30 题</h1>
+      <p>系统将解析你的六维偏好向量，在候选原型中匹配你的本命原型。</p>
+      <button id="calcBtn">开始测算</button>
+      <button id="backQuizBtn" class="ghost">返回检查答案</button>
+    </div>
+  </section>
+
+  <section id="calc" class="hidden">
+    <div class="hero">
+      <div style="font-size:56px;margin-bottom:10px;">💫</div>
+      <h1>正在生成你的专属档案</h1>
+      <div class="progress"><div id="calcFill" class="fill"></div></div>
+      <div id="calcText" class="muted" style="color:#c084fc;">正在解析你的 30 个选择...</div>
+      <div id="calcPct" class="muted" style="margin-top:6px;">0%</div>
+    </div>
+  </section>
+
+  <section id="result" class="hidden">
+    <div class="tabs" id="resultTabs"></div>
+    <div class="result-container" id="resultContent"></div>
+  </section>
+</main>
+
+<div id="modal">
+  <span class="closeX" onclick="closeModal()">×</span>
+  <p class="modalTip">👇 长按图片保存到相册 👇</p>
+  <div id="modalScroll"></div>
+</div>
+
+<div id="copyModal">
+  <span class="closeX" onclick="closeCopy()">×</span>
+  <p class="modalTip">👇 复制下面文案发给朋友 👇</p>
+  <textarea id="copyArea" readonly></textarea>
+  <button id="copyBtn">一键复制</button>
+</div>
 <script>
 const dims = [
   {"code":"face","name":"颜值","desc":"五官风格、面部记忆点与整体上镜氛围"},
@@ -458,6 +539,8 @@ const people = {
 
 let code = "", remaining = 0, currentGen = "", qIndex = 0, answers = [], serverResults = [], curIdx = 0;
 const $ = id => document.getElementById(id);
+const ICONS = ["👁", "💃", "🎭", "⚡", "🌟", "💞"];
+const ALLSHOP = "https://allshop-djt.pages.dev/";
 
 async function api(url, body) {
   const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
@@ -467,9 +550,10 @@ async function api(url, body) {
   return d;
 }
 
-function show(id) {
-  ["entry", "choose", "quiz", "confirm", "calc", "result"].forEach(function (x) { $(x).classList.toggle("hidden", x !== id); });
-  window.scrollTo(0, 0);
+function toArr(x) {
+  if (Array.isArray(x)) return x;
+  if (x && typeof x === "object") return Object.keys(x).map(function (k) { return { gen: k, result: x[k] }; });
+  return [];
 }
 
 function genLabel(g) {
@@ -477,54 +561,170 @@ function genLabel(g) {
   return (genInfo[i] && genInfo[i].name) || String(g);
 }
 
+function show(id) {
+  ["entry", "choose", "quiz", "confirm", "calc", "result"].forEach(function (x) { $(x).classList.toggle("hidden", x !== id); });
+  $("scrollNav").classList.toggle("hidden", id !== "result");
+  window.scrollTo(0, 0);
+}
+
 function normResult(r) {
   r = r || {};
-  const w = (r.winner && typeof r.winner === "object") ? r.winner : { name: String(r.winner || "未知原型"), desc: "", summary: "", detail: "" };
+  const w = (r.winner && typeof r.winner === "object") ? r.winner : { name: String(r.winner || "未知原型"), desc: "", summary: "", detail: "", aspects: {} };
+  if (!w.aspects) w.aspects = {};
   const sc = Array.isArray(r.scores) ? r.scores : [0, 0, 0, 0, 0, 0];
   const ch = Array.isArray(r.champions) ? r.champions.map(function (c) {
-    return (c && typeof c === "object") ? c : { name: String(c || "—"), desc: "", summary: "", detail: "" };
+    return (c && typeof c === "object") ? c : { name: String(c || "—"), desc: "", summary: "", detail: "", aspects: {} };
   }) : [];
   const rn = (r.runner && typeof r.runner === "object") ? r.runner : { name: r.runner ? String(r.runner) : "—", gap: null };
   return { w: w, sc: sc, ch: ch, rn: rn };
 }
 
-function buildPosters(r, label, times) {
+function dimBlocks(from, to, sc, ch) {
+  let s = "";
+  for (let i = from; i < to; i++) {
+    const c = ch[i] || { name: "—", aspects: {} };
+    const ca = (c.aspects && c.aspects[dims[i].name]) || "";
+    s += '<div class="dim-block"><div class="dim-header-row">'
+      + '<span class="dim-name-score">' + dims[i].name + '（' + sc[i] + '分）</span>'
+      + '<span class="dim-champion">最像：' + c.name + '</span></div>'
+      + '<div class="bar-container"><div class="bar-fill" style="width:' + sc[i] + '%"></div></div>'
+      + '<div class="dim-desc-text">💡 ' + dims[i].desc + (ca ? '｜' + c.name + '：' + ca : '') + '</div></div>';
+  }
+  return s;
+}
+
+function dimSections(from, to, sc, ch, asp) {
+  let s = "";
+  for (let i = from; i < to; i++) {
+    const c = ch[i] || { name: "—" };
+    s += '<div class="b-dim-section"><div class="b-dim-title">' + ICONS[i] + ' ' + dims[i].name + '</div>'
+      + '<div class="b-dim-text"><b style="color:#d8b4fe">' + (asp[dims[i].name] || "—") + '</b>（' + sc[i] + '分）<br>'
+      + dims[i].desc + '<br><span style="color:#888">该维度最接近：' + c.name + '</span></div></div>';
+  }
+  return s;
+}
+
+function buildPages(r, label, times, includeF) {
   const n = normResult(r), w = n.w, sc = n.sc, ch = n.ch, rn = n.rn;
-  const maxIdx = sc.indexOf(Math.max.apply(null, sc));
+  const asp = w.aspects || {};
+  const tag = '<div class="test-index-tag">第 ' + times + ' 次测试</div>';
+  const title2 = (w.desc ? w.desc + " " : "") + w.name;
+
   let h = "";
-  h += '<article class="poster">';
-  h += '<div class="kicker">YOUR ARCHETYPE · ' + label + ' · 第 ' + times + ' 次</div>';
-  h += '<div class="winner">' + w.name + '</div>';
-  if (w.desc) h += '<p style="text-align:center;color:#d8b4fe;font-weight:bold;margin:0 0 12px">' + w.desc + '</p>';
-  if (w.summary) h += '<p style="text-align:center;color:#ccc;">' + w.summary + '</p>';
-  h += '<h3 style="margin-top:25px;color:#d8b4fe;">你的六维偏好画像</h3>';
-  for (let i = 0; i < 6; i++) {
-    h += '<div class="dim"><b>' + dims[i].name + '</b>'
-      + '<span style="float:right;color:#c084fc;font-weight:bold;">' + sc[i] + '分</span>'
-      + '<div class="score"><i style="width:' + sc[i] + '%"></i></div>'
-      + '<small>' + dims[i].desc + '</small></div>';
-  }
-  h += '<p class="note">第二接近原型：<strong>' + rn.name + '</strong>' + ((rn.gap !== null && rn.gap !== undefined) ? '。两者距离差：' + rn.gap : '') + '。</p>';
-  h += '<p class="note">匹配算法根据你的答题向量与候选原型向量计算相似度，结果仅供娱乐参考。</p>';
-  h += '</article>';
+  h += '<div class="page-card saveable">' + tag
+    + '<div class="a-page-title">JAV ARCHETYPE ARCHIVE · ' + label + '</div>'
+    + '<h2 class="a-page-name">' + w.name + '</h2>'
+    + '<div class="a-page-desc">' + (w.desc || "") + '</div>'
+    + '<div class="radar-box"><h4>✨ 你的本命气质魂 ✨</h4><canvas id="radarCanvas" width="400" height="400"></canvas></div>'
+    + '<div class="a-page-summary">' + (w.summary || w.detail || "") + '</div>'
+    + '</div>';
 
-  h += '<article class="poster"><div class="kicker">DIMENSION CHAMPIONS</div><div class="winner">六维专属原型榜</div>';
-  for (let j = 0; j < 6; j++) {
-    const c = ch[j] || { name: "—", desc: "", summary: "", detail: "" };
-    h += '<div class="dim"><b>' + dims[j].name + '</b>'
-      + '<div class="winner" style="font-size:22px;text-align:left;margin:10px 0;">' + c.name + '</div>'
-      + '<small style="color:#d8b4fe">' + (c.desc || dims[j].desc) + '</small>'
-      + ((c.detail || c.summary) ? '<p style="margin-top:8px;color:#ccc;">' + (c.detail || c.summary) + '</p>' : '')
-      + '</div>';
-  }
-  h += '</article>';
+  h += '<div class="page-card saveable">' + tag
+    + '<div class="b-page-desc-large">' + title2 + '</div>'
+    + '<div class="b-page-dimensions-list">' + dimSections(0, 3, sc, ch, asp) + '</div>'
+    + '<div class="b-page-name-small">—— 匹配原型 ——</div></div>';
 
-  h += '<article class="poster"><div class="kicker">YOUR PROFILE</div><div class="winner">你的魅力画像</div>';
-  h += '<p style="color:#ccc;line-height:1.7;">' + (w.detail || w.summary || "暂无详细画像") + '</p>';
-  h += '<p style="margin-top:15px;color:#ccc;">你的突出维度是<strong style="color:#c084fc;">' + dims[maxIdx].name + '</strong>。这代表你在相应情境选择中更常采用该维度对应的策略。</p>';
-  h += '<p class="note">娱乐性自我探索内容，不用于判断他人或作现实决策。</p>';
-  h += '</article>';
+  h += '<div class="page-card saveable">' + tag
+    + '<div class="c-page-desc-medium">' + title2 + '</div>'
+    + '<div class="b-page-dimensions-list">' + dimSections(3, 6, sc, ch, asp) + '</div>'
+    + '<div class="b-page-name-small">—— 匹配原型 ——</div></div>';
+
+  h += '<div class="page-card saveable">' + tag
+    + '<div class="c-page-title">🧬 六维深度解析</div>' + dimBlocks(0, 3, sc, ch) + '</div>';
+
+  h += '<div class="page-card saveable">' + tag
+    + '<div class="c-page-title">🧬 六维深度解析</div>' + dimBlocks(3, 6, sc, ch)
+    + '<p class="note" style="margin-top:18px">第二接近原型：' + rn.name
+    + ((rn.gap !== null && rn.gap !== undefined) ? '（距离差 ' + rn.gap + '）' : '') + '。结果仅供娱乐参考。</p></div>';
+
+  if (includeF) {
+    h += '<div class="page-card page-f">'
+      + '<div class="c-page-title">📤 保存与分享</div>'
+      + '<div class="f-actions">'
+      + '<button class="btn-save-poster" onclick="saveAllPosters(this)">📸 保存当前图片</button>'
+      + '<button class="btn-share-link" onclick="shareResult()">🔗 分享测试结果</button>'
+      + '<button class="btn-retest" onclick="backToTest()">🔄 返回再次测试</button>'
+      + '<a class="btn-more" href="' + ALLSHOP + '">🛒 更多测试</a>'
+      + '<p class="f-tip">保存：A–E 共 5 张海报分别存到本地<br>分享：生成文案复制链接发给朋友</p>'
+      + '</div></div>';
+  }
   return h;
+}
+
+function drawRadar(cv, sc, ch) {
+  if (!cv || !sc) return;
+  const ctx = cv.getContext("2d"), W = 400, H = 400;
+  cv.width = W; cv.height = H;
+  const cx = W / 2, cy = H / 2, R = 130, MAX = 100;
+  ctx.clearRect(0, 0, W, H);
+  for (let lv = 1; lv <= 5; lv++) {
+    const r = R / 5 * lv;
+    ctx.beginPath();
+    for (let i = 0; i < 6; i++) {
+      const a = Math.PI * 2 / 6 * i - Math.PI / 2;
+      const x = cx + r * Math.cos(a), y = cy + r * Math.sin(a);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.closePath(); ctx.strokeStyle = "#333"; ctx.lineWidth = 1; ctx.stroke();
+  }
+  for (let i = 0; i < 6; i++) {
+    const a = Math.PI * 2 / 6 * i - Math.PI / 2;
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + R * Math.cos(a), cy + R * Math.sin(a));
+    ctx.strokeStyle = "#444"; ctx.stroke();
+  }
+  const pts = [];
+  ctx.beginPath();
+  for (let i = 0; i < 6; i++) {
+    const a = Math.PI * 2 / 6 * i - Math.PI / 2, r = sc[i] / MAX * R;
+    const x = cx + r * Math.cos(a), y = cy + r * Math.sin(a);
+    pts.push({ x: x, y: y, a: a });
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  }
+  ctx.closePath(); ctx.fillStyle = "rgba(147,51,234,0.32)"; ctx.fill();
+  ctx.strokeStyle = "#9333ea"; ctx.lineWidth = 2; ctx.stroke();
+  ctx.textBaseline = "middle";
+  for (let i = 0; i < 6; i++) {
+    const p = pts[i];
+    ctx.beginPath(); ctx.arc(p.x, p.y, 4, 0, Math.PI * 2); ctx.fillStyle = "#c084fc"; ctx.fill();
+    const cos = Math.cos(p.a);
+    ctx.textAlign = (Math.abs(cos) < 0.2) ? "center" : (cos > 0 ? "right" : "left");
+    const off = 165, tx = cx + off * cos, ty = cy + off * Math.sin(p.a);
+    let nm = (ch[i] && ch[i].name) ? String(ch[i].name) : "";
+    if (nm.length > 6) nm = nm.slice(0, 6);
+    const top = (i === 0 || i === 1 || i === 5);
+    if (top) {
+      ctx.font = "bold 15px sans-serif"; ctx.fillStyle = "#fff"; ctx.fillText(nm, tx, ty - 30);
+      ctx.font = "bold 13px sans-serif"; ctx.fillStyle = "#c084fc"; ctx.fillText(dims[i].name, tx, ty - 12);
+      ctx.font = "12px sans-serif"; ctx.fillStyle = "#888"; ctx.fillText(sc[i] + "分", tx, ty + 6);
+    } else {
+      ctx.font = "12px sans-serif"; ctx.fillStyle = "#888"; ctx.fillText(sc[i] + "分", tx, ty - 6);
+      ctx.font = "bold 13px sans-serif"; ctx.fillStyle = "#c084fc"; ctx.fillText(dims[i].name, tx, ty + 12);
+      ctx.font = "bold 15px sans-serif"; ctx.fillStyle = "#fff"; ctx.fillText(nm, tx, ty + 30);
+    }
+  }
+}
+
+function checkScroll() {
+  const c = document.querySelector(".result-container");
+  const up = document.querySelector(".scroll-up"), dn = document.querySelector(".scroll-down");
+  if (!c || !up || !dn) return;
+  up.classList.toggle("visible", c.scrollTop > 50);
+  dn.classList.toggle("visible", c.scrollTop < c.scrollHeight - c.clientHeight - 50);
+}
+
+function initScrollButtons() {
+  const c = document.querySelector(".result-container");
+  if (!c) return;
+  if (c.dataset.bound !== "1") { c.dataset.bound = "1"; c.addEventListener("scroll", checkScroll); }
+  checkScroll();
+}
+
+function scrollPage(d) {
+  const c = document.querySelector(".result-container");
+  if (!c) return;
+  const card = c.querySelector(".page-card");
+  const step = card ? card.offsetHeight + 20 : c.clientHeight;
+  c.scrollBy({ top: d * step, behavior: "smooth" });
 }
 
 function renderGenCards() {
@@ -549,32 +749,25 @@ function gotoChoose() {
 $("start").onclick = async function () {
   code = $("code").value.trim().toUpperCase();
   if (!/^[A-Z0-9]{6}$/.test(code)) {
-    $("msg").textContent = "请输入6位授权码";
-    $("msg").style.color = "#f87171";
-    return;
+    $("msg").textContent = "请输入6位授权码"; $("msg").style.color = "#f87171"; return;
   }
   $("start").disabled = true;
-  $("msg").textContent = "验证中...";
-  $("msg").style.color = "#d8b4fe";
+  $("msg").textContent = "验证中..."; $("msg").style.color = "#d8b4fe";
   try {
     const d = await api("/api/check", { code: code });
     remaining = d.remaining || 0;
-    serverResults = Array.isArray(d.results) ? d.results : [];
+    serverResults = toArr(d.results);
     if (remaining > 0) {
       gotoChoose();
       $("msg").textContent = "";
     } else if (serverResults.length > 0) {
       showResultView();
     } else {
-      $("msg").textContent = "该授权码次数已用完，且无历史记录";
-      $("msg").style.color = "#f87171";
+      $("msg").textContent = "该授权码次数已用完，且无历史记录"; $("msg").style.color = "#f87171";
     }
   } catch (e) {
-    $("msg").textContent = "验证失败: " + e.message;
-    $("msg").style.color = "#f87171";
-  } finally {
-    $("start").disabled = false;
-  }
+    $("msg").textContent = "验证失败: " + e.message; $("msg").style.color = "#f87171";
+  } finally { $("start").disabled = false; }
 };
 
 $("code").addEventListener("input", function (e) {
@@ -585,11 +778,8 @@ $("viewResultBtn").onclick = function () { showResultView(); };
 
 function chooseGen(gen) {
   if (remaining <= 0) { alert("测试次数已用完，无法再次测试"); return; }
-  currentGen = gen;
-  qIndex = 0;
-  answers = new Array(30).fill(null);
-  renderQ();
-  show("quiz");
+  currentGen = gen; qIndex = 0; answers = new Array(30).fill(null);
+  renderQ(); show("quiz");
 }
 
 function renderQ() {
@@ -602,7 +792,7 @@ function renderQ() {
       + String.fromCharCode(65 + i) + '. ' + o.t + '</button>';
   }).join("");
   $("prev").disabled = (qIndex === 0);
-  $("next").textContent = (qIndex === 29) ? "提交答案" : "下一题";
+  $("next").textContent = (qIndex === 29) ? "提交答案" : "下一题 →";
   $("next").disabled = (answers[qIndex] === null);
 }
 
@@ -613,7 +803,6 @@ $("next").onclick = function () {
   if (answers[qIndex] === null) return;
   if (qIndex < 29) { qIndex++; renderQ(); } else { show("confirm"); }
 };
-
 $("backQuizBtn").onclick = function () { qIndex = 29; renderQ(); show("quiz"); };
 $("calcBtn").onclick = function () { startCalc(); };
 
@@ -662,7 +851,8 @@ function distance(a, b) {
 
 function match(scores) {
   const list = people[currentGen];
-  const ranked = list.map(function (p) { return { p: p, dist: distance(scores, p.scores) }; }).sort(function (a, b) { return a.dist - b.dist; });
+  const ranked = list.map(function (p) { return { p: p, dist: distance(scores, p.scores) }; })
+    .sort(function (a, b) { return a.dist - b.dist; });
   const championByDim = dims.map(function (d, i) {
     return list.map(function (p) { return { p: p, delta: Math.abs(scores[i] - p.scores[i] * 10) }; })
       .sort(function (a, b) { return a.delta - b.delta; })[0].p;
@@ -670,14 +860,18 @@ function match(scores) {
   return { winner: ranked[0], runner: ranked[1], championByDim: championByDim };
 }
 
+function pack(x) {
+  return { name: x.name, desc: x.desc, summary: x.summary, detail: x.detail, aspects: x.aspects || {} };
+}
+
 async function finish() {
   if (answers.some(function (x) { return x === null; })) { alert("还有题目未作答"); show("quiz"); return; }
-  const scores = calcScores(), m = match(scores), p = m.winner.p;
+  const scores = calcScores(), m = match(scores);
   const payload = {
     scores: scores,
-    winner: { name: p.name, desc: p.desc, summary: p.summary, detail: p.detail },
+    winner: pack(m.winner.p),
     runner: { name: m.runner.p.name, gap: Number((m.runner.dist - m.winner.dist).toFixed(2)) },
-    champions: m.championByDim.map(function (x) { return { name: x.name, desc: x.desc, summary: x.summary, detail: x.detail }; }),
+    champions: m.championByDim.map(pack),
     timestamp: new Date().toISOString()
   };
   try {
@@ -710,86 +904,82 @@ function switchResult(i) {
   curIdx = i;
   renderResultTabs();
   renderCurrentResult();
-  window.scrollTo(0, 0);
+  const c = document.querySelector(".result-container");
+  if (c) c.scrollTop = 0;
 }
 
 function renderCurrentResult() {
   const rec = serverResults[curIdx];
   if (!rec) return;
-  $("posters").innerHTML = buildPosters(rec.result, genLabel(rec.gen), curIdx + 1);
+  $("resultContent").innerHTML = buildPages(rec.result, genLabel(rec.gen), curIdx + 1, true);
+  setTimeout(function () {
+    const n = normResult(rec.result);
+    const cv = document.getElementById("radarCanvas");
+    if (cv) drawRadar(cv, n.sc, n.ch);
+    initScrollButtons();
+    checkScroll();
+  }, 150);
 }
 
-async function captureEl(el) {
+async function captureCard(el) {
   const om = el.style.minHeight, oh = el.style.height;
-  el.style.minHeight = "0";
-  el.style.height = "auto";
+  el.style.minHeight = "0"; el.style.height = "auto";
   try {
     const cv = await html2canvas(el, { scale: 2, backgroundColor: "#151515", useCORS: true, logging: false });
     return cv.toDataURL("image/png");
-  } finally {
-    el.style.minHeight = om;
-    el.style.height = oh;
-  }
+  } finally { el.style.minHeight = om; el.style.height = oh; }
 }
 
-$("saveBtn").onclick = async function () {
-  const btn = this, old = btn.textContent;
-  const cards = document.querySelectorAll("#posters .poster");
+async function saveAllPosters(btn) {
+  const cards = document.querySelectorAll("#resultContent .page-card.saveable");
   if (!cards.length) return;
-  btn.disabled = true;
-  btn.textContent = "⏳ 生成图片中...";
+  const old = btn.textContent;
+  btn.disabled = true; btn.textContent = "⏳ 生成 5 张海报中...";
   try {
     const imgs = [];
-    for (let i = 0; i < cards.length; i++) { imgs.push(await captureEl(cards[i])); }
+    for (let i = 0; i < cards.length; i++) { imgs.push(await captureCard(cards[i])); }
     const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     if (mobile) {
       $("modalScroll").innerHTML = imgs.map(function (d, i) {
-        return '<img src="' + d + '" alt="结果' + (i + 1) + '"><small style="color:#888;text-align:center;display:block">第 ' + (i + 1) + ' 张 / 共 ' + imgs.length + ' 张</small>';
+        return '<img src="' + d + '" alt="海报' + (i + 1) + '"><small style="color:#888;text-align:center;display:block">第 ' + (i + 1) + ' 张 / 共 ' + imgs.length + ' 张</small>';
       }).join("");
       $("modal").style.display = "flex";
     } else {
       imgs.forEach(function (d, i) {
         const a = document.createElement("a");
-        a.download = "jav-archetype-" + (curIdx + 1) + "-" + (i + 1) + ".png";
-        a.href = d;
-        a.click();
+        a.download = "jav-archetype-" + (curIdx + 1) + "-page" + (i + 1) + ".png";
+        a.href = d; a.click();
       });
     }
   } catch (e) {
-    alert("生成图片失败，请尝试手动截图");
-    console.error(e);
-  } finally {
-    btn.disabled = false;
-    btn.textContent = old;
-  }
-};
+    alert("生成海报失败，请尝试手动截图"); console.error(e);
+  } finally { btn.disabled = false; btn.textContent = old; }
+}
 
 function closeModal() { $("modal").style.display = "none"; }
 function closeCopy() { $("copyModal").style.display = "none"; }
 
-$("shareBtn").onclick = function () {
+function shareResult() {
   const rec = serverResults[curIdx];
   const n = normResult(rec ? rec.result : null);
   const url = location.origin + "/share.html?code=" + encodeURIComponent(code);
   $("copyArea").value = '我的测试结果是"' + (n.w.desc || n.w.name) + '"。' + (n.w.summary || "") + ' 我的测试结果：' + url;
   $("copyModal").style.display = "flex";
   setTimeout(function () { const t = $("copyArea"); t.focus(); t.select(); }, 50);
-};
+}
 
 $("copyBtn").onclick = function () {
   const t = $("copyArea");
-  t.focus();
-  t.select();
+  t.focus(); t.select();
   if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(t.value).then(function () { alert("✅ 已复制，粘贴发给朋友即可"); }).catch(function () { alert("请长按文本框手动复制"); });
-  } else {
-    alert("请长按文本框手动复制");
-  }
+    navigator.clipboard.writeText(t.value).then(function () { alert("✅ 已复制，粘贴发给朋友即可"); })
+      .catch(function () { alert("请长按文本框手动复制"); });
+  } else { alert("请长按文本框手动复制"); }
 };
 
-$("againBtn").onclick = function () {
+function backToTest() {
   if (remaining > 0) { gotoChoose(); } else { location.reload(); }
-};
+}
 </script>
 </body>
 </html>
