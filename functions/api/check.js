@@ -1,17 +1,16 @@
-export async function onRequestPost(context) {
-  const { request, env } = context;
-  const { code } = await request.json();
-  if (!code || code.length !== 6) return new Response(JSON.stringify({ error: '请输入6位授权码' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"}});
+const codeKey=code=>"CODE_"+String(code||"").trim().toUpperCase();
+const validCode=code=>/^[A-Z0-9]{6}$/.test(String(code||"").trim().toUpperCase());
+const adminOK=(password,env)=>!!env.ADMIN_PASSWORD && password===env.ADMIN_PASSWORD;
 
-  const key = `CODE_${code.toUpperCase().trim()}`;
-  const data = await env.MY_KV.get(key, { type: 'json' });
-  if (!data) return new Response(JSON.stringify({ error: '授权码不存在或已过期' }), { status: 404, headers: { 'Content-Type': 'application/json' } });
-
-  const remaining = data.max_attempts - data.used_attempts;
-  return new Response(JSON.stringify({ 
-    valid: true, 
-    remaining, 
-    has_result: (data.results && data.results.length > 0), 
-    results: data.results || [] // 🚨 返回数组
-  }), { headers: { 'Content-Type': 'application/json' } });
+export async function onRequestPost({request,env}) {
+  try {
+    const {code}=await request.json();
+    if(!validCode(code)) return json({error:"请输入6位授权码"},400);
+    const data=await env.MY_KV.get(codeKey(code),{type:"json"});
+    if(!data) return json({error:"授权码不存在或已过期"},404);
+    const max=Math.max(0,Number(data.max_attempts)||0), used=Math.max(0,Number(data.used_attempts)||0);
+    const results=Array.isArray(data.results)?data.results:(data.results&&typeof data.results==="object"?Object.entries(data.results).map(([gen,result])=>({gen,result,timestamp:data.created_at||null})):[]);
+    return json({valid:true,remaining:Math.max(0,max-used),has_result:results.length>0,results});
+  } catch(e){return json({error:"请求格式错误"},400)}
 }
